@@ -1,11 +1,10 @@
 package dwgfx;
 
+import java.io.IOException;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 /**
@@ -15,23 +14,16 @@ import javafx.stage.Stage;
  */
 public class MainApp extends Application {
     @Override public void start(Stage primaryStage) {
-        Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
-            }
-        });
-        
-        StackPane root = new StackPane();
-        root.getChildren().add(btn);
-        
-        Scene scene = new Scene(root, 300, 250);
-        
-        primaryStage.setTitle("Hello World!");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("view/PrimaryScene.fxml"));
+        try {
+            BorderPane root = loader.load();
+            primaryStage.setScene(new Scene(root));
+            primaryStage.setTitle("DrawingFX");
+            primaryStage.show();
+        } catch (IOException ioex) {
+            System.err.println("An IOException ocurred!");
+        }
     }
 
     /**
