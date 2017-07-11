@@ -1,5 +1,6 @@
 package dwgfx;
 
+import dwgfx.view.PrimaryScene;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -20,6 +21,8 @@ public class MainApp extends Application {
             BorderPane root = loader.load();
             primaryStage.setScene(new Scene(root));
             primaryStage.setTitle("DrawingFX");
+            PrimaryScene controller = loader.getController();
+            controller.setStage(primaryStage);
             primaryStage.show();
         } catch (IOException ioex) {
             System.err.println("An IOException ocurred!");

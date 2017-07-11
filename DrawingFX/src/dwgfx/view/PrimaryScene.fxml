@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.MenuButton?>
@@ -11,33 +12,33 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.input.KeyCodeCombination?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-
-<BorderPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dwgfx.view.PrimaryScene">
    <top>
       <HBox alignment="CENTER_LEFT" spacing="2.0" BorderPane.alignment="CENTER">
          <children>
             <MenuButton mnemonicParsing="false">
               <items>
-                <MenuItem mnemonicParsing="false" text="New">
+                <MenuItem mnemonicParsing="false" onAction="#handleNew" text="New">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator>
                   </MenuItem>
-                <MenuItem mnemonicParsing="false" text="Open">
+                <MenuItem mnemonicParsing="false" onAction="#handleOpen" text="Open">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator>
                   </MenuItem>
-                  <MenuItem mnemonicParsing="false" text="Save">
+                  <MenuItem mnemonicParsing="false" onAction="#handleSave" text="Save">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator>
                   </MenuItem>
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" text="Quit" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleQuit" text="Quit" />
               </items>
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
@@ -58,14 +59,21 @@
       </HBox>
    </top>
    <left>
-      <TreeView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <TreeView fx:id="nodeTree" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets right="5.0" />
          </BorderPane.margin>
       </TreeView>
    </left>
    <center>
-      <ScrollPane hbarPolicy="ALWAYS" prefHeight="450.0" prefWidth="450.0" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER" />
+      <ScrollPane hbarPolicy="ALWAYS" prefHeight="450.0" prefWidth="450.0" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
+         <content>
+            <Group>
+               <children>
+                  <AnchorPane fx:id="canvas" prefHeight="400.0" prefWidth="400.0" />
+               </children>
+            </Group>
+         </content></ScrollPane>
    </center>
    <padding>
       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
