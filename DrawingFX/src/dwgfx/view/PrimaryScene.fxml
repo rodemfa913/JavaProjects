@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
@@ -17,65 +20,92 @@
 <?import javafx.scene.layout.HBox?>
 
 <BorderPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dwgfx.view.PrimaryScene">
-   <top>
-      <HBox alignment="CENTER_LEFT" spacing="2.0" BorderPane.alignment="CENTER">
-         <children>
-            <MenuButton mnemonicParsing="false">
-              <items>
-                <MenuItem mnemonicParsing="false" onAction="#handleNew" text="New">
-                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                     </accelerator>
-                  </MenuItem>
-                <MenuItem mnemonicParsing="false" onAction="#handleOpen" text="Open">
-                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                     </accelerator>
-                  </MenuItem>
-                  <MenuItem mnemonicParsing="false" onAction="#handleSave" text="Save">
-                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                     </accelerator>
-                  </MenuItem>
-                  <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" onAction="#handleQuit" text="Quit" />
-              </items>
-               <graphic>
-                  <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@applications-graphics.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </MenuButton>
-            <ComboBox promptText="Types" />
-            <Button mnemonicParsing="false" text="Add" />
-            <Button mnemonicParsing="false" text="Edit" />
-            <Button mnemonicParsing="false" text="Delete" />
-         </children>
-         <BorderPane.margin>
-            <Insets bottom="3.0" />
-         </BorderPane.margin>
-      </HBox>
-   </top>
-   <left>
-      <TreeView fx:id="nodeTree" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <BorderPane.margin>
-            <Insets right="5.0" />
-         </BorderPane.margin>
-      </TreeView>
-   </left>
-   <center>
-      <ScrollPane hbarPolicy="ALWAYS" prefHeight="450.0" prefWidth="450.0" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
-         <content>
-            <Group>
-               <children>
-                  <AnchorPane fx:id="canvas" prefHeight="400.0" prefWidth="400.0" />
-               </children>
-            </Group>
-         </content></ScrollPane>
-   </center>
-   <padding>
-      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-   </padding>
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="2.0" BorderPane.alignment="CENTER">
+            <children>
+                <MenuButton mnemonicParsing="false">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleNew" text="New">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                            </accelerator>
+                        </MenuItem>
+                        <MenuItem mnemonicParsing="false" onAction="#handleOpen" text="Open">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                            </accelerator>
+                        </MenuItem>
+                        <MenuItem mnemonicParsing="false" onAction="#handleSave" text="Save">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                            </accelerator>
+                        </MenuItem>
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleQuit" text="Quit" />
+                    </items>
+                    <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@applications-graphics.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </MenuButton>
+                <ComboBox fx:id="typeCombo" promptText="Types">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="Layer" />
+                            <String fx:value="Rectangle" />
+                        </FXCollections>
+                    </items>
+                </ComboBox>
+                <Button mnemonicParsing="false" onAction="#handleAdd" text="Add" />
+                <Button mnemonicParsing="false" text="Edit" />
+                <Button mnemonicParsing="false" text="Delete" />
+                <Label text="Move:" />
+                <Button mnemonicParsing="false">
+                    <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@go-previous.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button mnemonicParsing="false">
+                    <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@go-next.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+            </children>
+            <BorderPane.margin>
+                <Insets bottom="3.0" />
+            </BorderPane.margin>
+        </HBox>
+    </top>
+    <left>
+        <TreeView fx:id="nodeTree" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <BorderPane.margin>
+                <Insets right="5.0" />
+            </BorderPane.margin>
+        </TreeView>
+    </left>
+    <center>
+        <ScrollPane hbarPolicy="ALWAYS" prefHeight="450.0" prefWidth="450.0" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
+            <content>
+                <Group>
+                    <children>
+                        <AnchorPane fx:id="canvas" prefHeight="400.0" prefWidth="400.0" />
+                    </children>
+                </Group>
+            </content>
+        </ScrollPane>
+    </center>
+    <padding>
+        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+    </padding>
 </BorderPane>

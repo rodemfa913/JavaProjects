@@ -25,7 +25,8 @@ public class MainApp extends Application {
             controller.setStage(primaryStage);
             primaryStage.show();
         } catch (IOException ioex) {
-            System.err.println("An IOException ocurred!");
+            //System.err.println("An IOException ocurred!");
+            ioex.printStackTrace();
         }
     }
 
