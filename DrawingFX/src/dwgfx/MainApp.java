@@ -1,7 +1,7 @@
 package dwgfx;
 
+import dialogs.ExceptionDialog;
 import dwgfx.view.PrimaryScene;
-import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -24,9 +24,9 @@ public class MainApp extends Application {
             PrimaryScene controller = loader.getController();
             controller.setStage(primaryStage);
             primaryStage.show();
-        } catch (IOException ioex) {
-            //System.err.println("An IOException ocurred!");
-            ioex.printStackTrace();
+        } catch (Exception ex) {
+            ExceptionDialog dialog = new ExceptionDialog(ex);
+            dialog.showAndWait();
         }
     }
 
