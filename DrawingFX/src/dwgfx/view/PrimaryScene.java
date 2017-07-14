@@ -13,6 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
+import javafx.scene.text.*;
 import javafx.stage.Stage;
 
 /**
@@ -28,6 +29,10 @@ public class PrimaryScene implements Initializable {
     private ShapeHandler shapeHandler;
     private Stage primaryStage;
     
+    /**
+     * Listener class for id property of Shape.
+     * Updates the TreeView when id changes.
+     */
     private class IdListener implements ChangeListener<String> {
         @Override public void changed(
                 ObservableValue<? extends String> observable,
@@ -97,7 +102,34 @@ public class PrimaryScene implements Initializable {
             } else if (!(node instanceof Group)) {
                 layItem = addLayer();
             }
-            Shape shape = new Rectangle(200, 150);
+            Shape shape;
+            switch (type) {
+                case "Arc":
+                    shape = new Arc(0, 0, 100, 75, 0, 90);
+                    break;
+                case "Circle":
+                    shape = new Circle(50);
+                    break;
+                case "Ellipse":
+                    shape = new Ellipse(100, 75);
+                    break;
+                case "Path":
+                    shape = new Path(
+                            new MoveTo(0, 0),
+                            new LineTo(100, 0),
+                            new CubicCurveTo(150, 0, 75, 100, 125, 150),
+                            new LineTo(50, 175),
+                            new ClosePath()
+                    );
+                    break;
+                case "Text":
+                    Text text = new Text("Testing\n1 2 3");
+                    text.setFont(new Font("Monospaced Regular", 24));
+                    shape = text;
+                    break;
+                default:
+                    shape = new Rectangle(200, 150);
+            }
             shape.setId("item");
             shape.idProperty().addListener(idListener);
             shape.setOnMouseClicked(shapeHandler);

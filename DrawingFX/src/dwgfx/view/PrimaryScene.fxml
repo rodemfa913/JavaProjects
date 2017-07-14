@@ -4,20 +4,10 @@
 <?import javafx.collections.FXCollections?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Group?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.SeparatorMenuItem?>
-<?import javafx.scene.control.TreeView?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.input.KeyCodeCombination?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.*?>
 
 <BorderPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dwgfx.view.PrimaryScene">
     <top>
@@ -54,8 +44,13 @@
                 <ComboBox fx:id="typeCombo" promptText="Types">
                     <items>
                         <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="Arc" />
+                            <String fx:value="Circle" />
+                            <String fx:value="Ellipse" />
                             <String fx:value="Layer" />
+                            <String fx:value="Path" />
                             <String fx:value="Rectangle" />
+                            <String fx:value="Text" />
                         </FXCollections>
                     </items>
                 </ComboBox>
