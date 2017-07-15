@@ -2,7 +2,7 @@ package dwgfx.view;
 
 import dialogs.ExceptionDialog;
 import javafx.fxml.*;
-import javafx.scene.Node;
+import javafx.scene.*;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 
@@ -20,15 +20,16 @@ public class Properties implements Props {
     @Override public void setItem(Node it) throws Exception {
         item = it;
         idText.setText(item.getId());
-        if (item instanceof AnchorPane) {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("DrawingProps.fxml"));
-            Region root = loader.load();
-            VBox.setVgrow(root, Priority.ALWAYS);
-            propsRoot.getChildren().set(1, root);
-            controller = loader.getController();
-            controller.setItem(item);
-        }
+        FXMLLoader loader = new FXMLLoader();
+        String filePath =
+                item instanceof AnchorPane ? "DrawingProps.fxml" :
+                item instanceof Group ? "LayerProps.fxml" : "shape/ShapeProps.fxml";
+        loader.setLocation(getClass().getResource(filePath));
+        Region root = loader.load();
+        VBox.setVgrow(root, Priority.ALWAYS);
+        propsRoot.getChildren().set(1, root);
+        controller = loader.getController();
+        controller.setItem(item);
     }
 
     @Override public void handleApply() {

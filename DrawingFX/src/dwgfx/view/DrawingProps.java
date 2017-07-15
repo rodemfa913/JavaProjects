@@ -7,7 +7,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 /**
- * Controller class for Drawing subcomponent of Propertis dialog.
+ * Controller class for Drawing subcomponent of Properties dialog.
  *
  * @author rodemfa
  */
