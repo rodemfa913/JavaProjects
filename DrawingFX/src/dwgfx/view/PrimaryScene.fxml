@@ -55,7 +55,7 @@
                     </items>
                 </ComboBox>
                 <Button mnemonicParsing="false" onAction="#handleAdd" text="Add" />
-                <Button mnemonicParsing="false" text="Edit" />
+                <Button mnemonicParsing="false" onAction="#handleEdit" text="Edit" />
                 <Button mnemonicParsing="false" text="Delete" />
                 <Label text="Move:" />
                 <Button mnemonicParsing="false">

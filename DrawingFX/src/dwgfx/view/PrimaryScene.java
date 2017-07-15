@@ -1,5 +1,6 @@
 package dwgfx.view;
 
+import dialogs.ExceptionDialog;
 import dwgfx.util.TreeCellFactory;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -14,7 +15,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.scene.text.*;
-import javafx.stage.Stage;
+import javafx.stage.*;
 
 /**
  * Controller class for the primary interface
@@ -74,6 +75,12 @@ public class PrimaryScene implements Initializable {
         }
     }
     
+    /**
+     * Initializes the controller class.
+     * 
+     * @param url
+     * @param rb 
+     */
     @Override public void initialize(URL url, ResourceBundle rb) {
         nodeTree.setCellFactory(new TreeCellFactory());
         MultipleSelectionModel<TreeItem<Node>> selectionModel = nodeTree.getSelectionModel();
@@ -136,6 +143,26 @@ public class PrimaryScene implements Initializable {
             Group layer = (Group) layItem.getValue();
             layer.getChildren().add(shape);
             layItem.getChildren().add(new TreeItem<>(shape));
+        }
+    }
+    
+    @FXML private void handleEdit() {
+        Node item = nodeTree.getSelectionModel().getSelectedItem().getValue();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("Properties.fxml"));
+        try {
+            VBox root = loader.load();
+            Stage propsStage = new Stage();
+            propsStage.setScene(new Scene(root));
+            propsStage.setTitle("Properties");
+            propsStage.initModality(Modality.WINDOW_MODAL);
+            propsStage.initOwner(primaryStage);
+            Properties controller = loader.getController();
+            controller.setItem(item);
+            propsStage.showAndWait();
+        } catch (Exception ex) {
+            ExceptionDialog dialog = new ExceptionDialog(ex);
+            dialog.showAndWait();
         }
     }
     

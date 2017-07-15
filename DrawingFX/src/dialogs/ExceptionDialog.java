@@ -24,20 +24,19 @@ public final class ExceptionDialog extends Alert {
         dialogPane.setPrefWidth(600);
         dialogPane.setPrefHeight(450);
         
-        GridPane expContent = new GridPane();
+        VBox expContent = new VBox();
         dialogPane.setExpandableContent(expContent);
         expContent.setMaxWidth(Double.MAX_VALUE);
         
         Label label = new Label("The exception stacktrace was:");
-        expContent.add(label, 0, 0);
+        expContent.getChildren().add(label);
         
         TextArea textArea = new TextArea(sw.toString());
-        expContent.add(textArea, 0, 1);
+        expContent.getChildren().add(textArea);
         textArea.setEditable(false);
         textArea.setWrapText(true);
         textArea.setMaxWidth(Double.MAX_VALUE);
         textArea.setMaxHeight(Double.MAX_VALUE);
-        GridPane.setHgrow(textArea, Priority.ALWAYS);
-        GridPane.setVgrow(textArea, Priority.ALWAYS);
+        VBox.setVgrow(textArea, Priority.ALWAYS);
     }
 }
