@@ -1,6 +1,6 @@
 package dwgfx.view.shape;
 
-import dwgfx.view.Props;
+import dwgfx.view.Properties;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.*;
@@ -15,7 +15,7 @@ import javafx.scene.shape.*;
  *
  * @author rodemfa
  */
-public class ShapeProps implements Initializable, Props {
+public class ShapeProps implements Initializable, Properties {
     @FXML private Accordion shapeRoot;
     @FXML private ColorPicker fillColorPicker;
     @FXML private ColorPicker strokeColorPicker;
@@ -23,7 +23,7 @@ public class ShapeProps implements Initializable, Props {
     @FXML private ComboBox<StrokeLineJoin> lineJoinCombo;
     @FXML private Spinner<Double> strokeWidthSpin;
     @FXML private TitledPane genTitledPane;
-    private Props controller;
+    private Properties controller;
     private Shape shape;
     
     /**
@@ -44,7 +44,7 @@ public class ShapeProps implements Initializable, Props {
         lineCapCombo.setValue(shape.getStrokeLineCap());
         lineJoinCombo.setValue(shape.getStrokeLineJoin());
         FXMLLoader loader = new FXMLLoader();
-        String filePath = "RectProps.fxml";
+        String filePath = shape instanceof Rectangle ? "RectProps.fxml" : "ArcProps.fxml";
         loader.setLocation(getClass().getResource(filePath));
         Pane root = loader.load();
         genTitledPane.setContent(root);

@@ -1,6 +1,6 @@
 package dwgfx.view.shape;
 
-import dwgfx.view.Props;
+import dwgfx.view.Properties;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Spinner;
@@ -11,7 +11,7 @@ import javafx.scene.shape.Rectangle;
  *
  * @author Rodemfa913
  */
-public class RectProps implements Props {
+public class RectProps implements Properties {
     @FXML private Spinner<Double> arcHeightSpin;
     @FXML private Spinner<Double> arcWidthSpin;
     @FXML private Spinner<Double> heightSpin;

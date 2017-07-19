@@ -11,7 +11,7 @@ import javafx.scene.paint.Color;
  *
  * @author rodemfa
  */
-public class DrawingProps implements Props {
+public class DrawingProps implements Properties {
     @FXML private ColorPicker bgColorPicker;
     @FXML private Spinner<Double> widthSpin, heightSpin;
     private AnchorPane drawing;

@@ -9,7 +9,7 @@ import javafx.scene.control.*;
  *
  * @author rodemfa
  */
-public class LayerProps implements Props {
+public class LayerProps implements Properties {
     @FXML private CheckBox visibleCheck;
     @FXML private Slider opacitySlider;
     private Group layer;

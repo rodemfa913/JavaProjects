@@ -149,7 +149,7 @@ public class PrimaryScene implements Initializable {
     @FXML private void handleEdit() {
         Node item = nodeTree.getSelectionModel().getSelectedItem().getValue();
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("Properties.fxml"));
+        loader.setLocation(getClass().getResource("NodeProps.fxml"));
         try {
             VBox root = loader.load();
             Stage propsStage = new Stage();
@@ -157,7 +157,7 @@ public class PrimaryScene implements Initializable {
             propsStage.setTitle("Properties");
             propsStage.initModality(Modality.WINDOW_MODAL);
             propsStage.initOwner(primaryStage);
-            Properties controller = loader.getController();
+            NodeProps controller = loader.getController();
             controller.setItem(item);
             propsStage.showAndWait();
         } catch (Exception ex) {
