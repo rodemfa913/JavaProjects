@@ -6,7 +6,7 @@ import javafx.scene.layout.*;
 
 /**
  * Shows a dialog with the exception details.
- * Reference: http://code.makery.ch/blog/javafx-dialogs-official/
+ * Reference: {@linktourl http://code.makery.ch/blog/javafx-dialogs-official}
  * 
  * @author rodemfa
  */
