@@ -5,7 +5,7 @@ import javafx.scene.control.TreeCell;
 import javafx.scene.shape.Shape;
 
 /**
- * A TreeCell-derivated class
+ * A {@link TreeCell}-derivated class.
  *
  * @author rodemfa
  */
