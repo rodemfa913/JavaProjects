@@ -3,7 +3,7 @@ package dwgfx.view;
 import javafx.scene.Node;
 
 /**
- * Interface for properties dialog and its subcomponents.
+ * Interface for {@link Properties} dialog and its subcomponents.
  *
  * @author rodemfa
  */

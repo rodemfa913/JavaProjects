@@ -11,7 +11,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 
 /**
- * Controller class for Shape subcomponent of Properties dialog.
+ * Controller class for {@link Shape} subcomponent of {@link dwgfx.view.NodeProps Properties} dialog.
  *
  * @author rodemfa
  */
@@ -44,7 +44,9 @@ public class ShapeProps implements Initializable, Properties {
         lineCapCombo.setValue(shape.getStrokeLineCap());
         lineJoinCombo.setValue(shape.getStrokeLineJoin());
         FXMLLoader loader = new FXMLLoader();
-        String filePath = shape instanceof Rectangle ? "RectProps.fxml" : "ArcProps.fxml";
+        String filePath =
+                shape instanceof Rectangle ? "RectProps.fxml" :
+                shape instanceof Path ? "PathProps.fxml" : "ArcProps.fxml";
         loader.setLocation(getClass().getResource(filePath));
         Pane root = loader.load();
         genTitledPane.setContent(root);
