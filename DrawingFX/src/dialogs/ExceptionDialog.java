@@ -5,16 +5,14 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
 /**
- * Shows an alert with the exception details.
- * Reference: http://code.makery.ch/blog/javafx-dialogs-official
- * 
+ * Shows an Alert with the Exception details.
+ * Reference: http://code.makery.ch/blog/javafx-dialogs-official .
  * @author rodemfa
  */
 public final class ExceptionDialog extends Alert {
     /**
-     * Creates an {@link Alert} with details of the given {@link Exception}.
-     * 
-     * @param ex the exception.
+     * Creates an Alert with details of the given Exception.
+     * @param ex the Exception.
      */
     public ExceptionDialog(Exception ex) {
         super(AlertType.ERROR);

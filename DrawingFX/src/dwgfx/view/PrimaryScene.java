@@ -18,8 +18,7 @@ import javafx.scene.text.*;
 import javafx.stage.*;
 
 /**
- * Controller class for the primary interface.
- *
+ * Controller class for the primary user interface.
  * @author rodemfa
  */
 public class PrimaryScene implements Initializable {
@@ -71,12 +70,6 @@ public class PrimaryScene implements Initializable {
         }
     }
     
-    /**
-     * Initializes the controller class.
-     * 
-     * @param url
-     * @param rb 
-     */
     @Override public void initialize(URL url, ResourceBundle rb) {
         nodeTree.setCellFactory(new TreeCellFactory());
         MultipleSelectionModel<TreeItem<Node>> selectionModel = nodeTree.getSelectionModel();
@@ -189,10 +182,8 @@ public class PrimaryScene implements Initializable {
     }
     
     /**
-     * Sets a reference to the primary {@link Stage}. This method is called by the
-     * main application.
-     * 
-     * @param stage the primary stage.
+     * Sets a reference to the primary Stage. This method is called by the main Application.
+     * @param stage the primary Stage.
      */
     public void setStage(Stage stage) {
         primaryStage = stage;

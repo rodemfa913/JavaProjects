@@ -6,7 +6,6 @@ import javafx.util.Callback;
 
 /**
  * A cell factory class.
- *
  * @author rodemfa
  */
 public class TreeCellFactory implements Callback<TreeView<Node>, TreeCell<Node>> {

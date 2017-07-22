@@ -4,16 +4,14 @@ import java.util.*;
 import javafx.scene.shape.*;
 
 /**
- * Helper class for convert {@link PathElement}s to {@link String} and vice versa.
- *
+ * Helper class for convert PathElements to String and vice versa.
  * @author rodemfa
  */
 public abstract class PathUtil {
     /**
-     * Converts a {@link List} of path elements to a formatted string.
-     * 
-     * @param elements the list of path elements.
-     * @return the formatted string.
+     * Converts a List of PathElements to a formatted String.
+     * @param elements the List of PathElements.
+     * @return the formatted String.
      */
     public static String toString(List<PathElement> elements) {
         String data = "";
@@ -50,11 +48,10 @@ public abstract class PathUtil {
     }
     
     /**
-     * Converts a formatted string to a list of path elements.
-     * 
-     * @param data the formatted string.
-     * @return the list of path elements, or an incomplete list if the string is bad formatted.
-     * @throws java.lang.Exception if the string could not be converted.
+     * Converts a formatted String to a List of PathElements.
+     * @param data the formatted String.
+     * @return the List of PathElements.
+     * @throws Exception if the string could not be converted.
      */
     public static List<PathElement> parseElements (String data) throws Exception {
         List<PathElement> elements = new ArrayList<>();

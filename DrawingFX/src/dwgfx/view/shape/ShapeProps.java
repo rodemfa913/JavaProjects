@@ -26,12 +26,6 @@ public class ShapeProps implements Initializable, Properties {
     private Properties controller;
     private Shape shape;
     
-    /**
-     * Initializes the controller class.
-     * 
-     * @param url
-     * @param rb
-     */
     @Override public void initialize(URL url, ResourceBundle rb) {
         shapeRoot.setExpandedPane(genTitledPane);
     }

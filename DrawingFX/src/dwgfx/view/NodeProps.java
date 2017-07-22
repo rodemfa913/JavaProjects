@@ -7,8 +7,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 
 /**
- * Controller class for properties dialog.
- *
+ * Controller class for the root layout of properties dialog.
+ * The dialog components depends of item to be edited, which
+ * can be the entire drawing, a layer or one of the shapes.
  * @author rodemfa
  */
 public class NodeProps implements Properties {
@@ -17,6 +18,11 @@ public class NodeProps implements Properties {
     private Node item;
     private Properties controller;
     
+    /**
+     * Sets the item for edition.
+     * @param it the item to be edited.
+     * @throws Exception in the case of loading error.
+     */
     @Override public void setItem(Node it) throws Exception {
         item = it;
         idText.setText(item.getId());
@@ -32,6 +38,10 @@ public class NodeProps implements Properties {
         controller.setItem(item);
     }
 
+    /**
+     * Applies the edition on item.
+     * All the Exceptions thrown by any component will be caught here.
+     */
     @Override public void handleApply() {
         item.setId(idText.getText());
         try {

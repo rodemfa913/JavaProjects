@@ -9,8 +9,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 /**
- * The main application class.
- *
+ * The main Application class.
  * @author rodemfa
  */
 public class MainApp extends Application {
