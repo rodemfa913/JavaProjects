@@ -18,7 +18,7 @@ import javafx.scene.text.*;
 import javafx.stage.*;
 
 /**
- * Controller class for the primary interface
+ * Controller class for the primary interface.
  *
  * @author rodemfa
  */
@@ -30,10 +30,6 @@ public class PrimaryScene implements Initializable {
     private ShapeHandler shapeHandler;
     private Stage primaryStage;
     
-    /**
-     * Listener class for id property of Shape.
-     * Updates the TreeView when id changes.
-     */
     private class IdListener implements ChangeListener<String> {
         @Override public void changed(
                 ObservableValue<? extends String> observable,
@@ -192,6 +188,12 @@ public class PrimaryScene implements Initializable {
         return layItem;
     }
     
+    /**
+     * Sets a reference to the primary {@link Stage}. This method is called by the
+     * main application.
+     * 
+     * @param stage the primary stage.
+     */
     public void setStage(Stage stage) {
         primaryStage = stage;
     }

@@ -9,7 +9,7 @@ import javafx.scene.Node;
  */
 public interface Properties {
     /**
-     * Set item for edition.
+     * Sets the item for edition.
      * 
      * @param item
      * @throws Exception
@@ -19,7 +19,7 @@ public interface Properties {
     /**
      * Handles action event of Apply button.
      * 
-     * @throws Exception 
+     * @throws Exception
      */
     public void handleApply() throws Exception;
 }
