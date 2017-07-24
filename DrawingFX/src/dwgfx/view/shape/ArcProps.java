@@ -7,8 +7,9 @@ import javafx.scene.control.*;
 import javafx.scene.shape.*;
 
 /**
- * Controller class for Arc-Circle-Ellipse subcomponent of Properties dialog.
- *
+ * Controller class of Arc-Circle-Ellipse form layout of properties dialog.
+ * The form is loaded when the item to be edited is an Arc, Circle or Ellipse.
+ * It is shown in the General panel of Shape form.
  * @author Rodemfa913
  */
 public class ArcProps implements Properties {
@@ -24,6 +25,10 @@ public class ArcProps implements Properties {
     @FXML private Spinner<Double> startSpin;
     private Shape shape;
     
+    /**
+     * Sets the item for edition.
+     * @param item the item to be edited.
+     */
     @Override public void setItem(Node item) {
         shape = (Shape) item;
         cxSpin.getValueFactory().setValue(shape.getLayoutX());
@@ -53,6 +58,9 @@ public class ArcProps implements Properties {
         }
     }
 
+    /**
+     * Applies the changes on item.
+     */
     @Override public void handleApply() {
         shape.setLayoutX(cxSpin.getValue());
         shape.setLayoutY(cySpin.getValue());

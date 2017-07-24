@@ -7,8 +7,9 @@ import javafx.scene.control.Spinner;
 import javafx.scene.shape.Rectangle;
 
 /**
- * Controller class for Rectangle subcomponent of Properties dialog.
- *
+ * Controller class for Rectangle form layout of properties dialog.
+ * The form is loaded when the item to be edited is an Rectangle.
+ * It is shown in the General panel of Shape form.
  * @author Rodemfa913
  */
 public class RectProps implements Properties {
@@ -20,6 +21,10 @@ public class RectProps implements Properties {
     @FXML private Spinner<Double> ySpin;
     private Rectangle rect;
     
+    /**
+     * Sets the item for edition.
+     * @param item the item to be edited.
+     */
     @Override public void setItem(Node item) {
         rect = (Rectangle) item;
         xSpin.getValueFactory().setValue(rect.getLayoutX());
@@ -30,6 +35,9 @@ public class RectProps implements Properties {
         arcHeightSpin.getValueFactory().setValue(rect.getArcHeight());
     }
 
+    /**
+     * Applies the changes on item.
+     */
     @Override public void handleApply() {
         rect.setLayoutX(xSpin.getValue());
         rect.setLayoutY(ySpin.getValue());

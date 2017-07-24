@@ -8,8 +8,9 @@ import javafx.scene.control.*;
 import javafx.scene.shape.Path;
 
 /**
- * Controller class for Path subcomponent of {@link dwgfx.view.NodeProps Properties} dialog.
- *
+ * Controller class of Path form layout of properties dialog.
+ * The form is loaded when the item to be edited is an Path.
+ * It is shown in the General panel of Shape form.
  * @author rodemfa
  */
 public class PathProps implements Properties {
@@ -18,6 +19,10 @@ public class PathProps implements Properties {
     @FXML private TextArea dataText;
     private Path path;
     
+    /**
+     * Sets the item for edition.
+     * @param item the item to be edited.
+     */
     @Override public void setItem(Node item) {
         path = (Path) item;
         xSpin.getValueFactory().setValue(path.getLayoutX());
@@ -25,6 +30,10 @@ public class PathProps implements Properties {
         dataText.setText(PathUtil.toString(path.getElements()));
     }
 
+    /**
+     * Applies the changes on item.
+     * @throws Exception if the Data property of Path is bad formated.
+     */
     @Override public void handleApply() throws Exception {
         path.setLayoutX(xSpin.getValue());
         path.setLayoutY(ySpin.getValue());
