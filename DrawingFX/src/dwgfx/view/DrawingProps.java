@@ -7,8 +7,8 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 /**
- * Controller class for Drawing subcomponent of Properties dialog.
- *
+ * Controller class of drawing form layout of properties dialog.
+ * The form is loaded when the item to be edited is the entire drawing.
  * @author rodemfa
  */
 public class DrawingProps implements Properties {
@@ -16,6 +16,10 @@ public class DrawingProps implements Properties {
     @FXML private Spinner<Double> widthSpin, heightSpin;
     private AnchorPane drawing;
     
+    /**
+     * Sets the item for edition.
+     * @param item the item to be edited.
+     */
     @Override public void setItem(Node item) {
         drawing = (AnchorPane) item;
         widthSpin.getValueFactory().setValue(drawing.getMinWidth());
@@ -23,7 +27,10 @@ public class DrawingProps implements Properties {
         bgColorPicker.setValue((Color) drawing.getBackground().getFills().get(0).getFill());
     }
 
-    @Override public void handleApply() throws Exception {
+    /**
+     * Applies the changes on item.
+     */
+    @Override public void handleApply() {
         drawing.setMinWidth(widthSpin.getValue());
         drawing.setMinHeight(heightSpin.getValue());
         drawing.setBackground(new Background(new BackgroundFill(bgColorPicker.getValue(), null, null)));

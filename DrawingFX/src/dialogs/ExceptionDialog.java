@@ -6,7 +6,8 @@ import javafx.scene.layout.*;
 
 /**
  * Shows an Alert with the Exception details.
- * Reference: http://code.makery.ch/blog/javafx-dialogs-official .
+ * <br>
+ * Reference: <a href="http://code.makery.ch/blog/javafx-dialogs-official#exception-dialog">Exception Dialog</a>.
  * @author rodemfa
  */
 public final class ExceptionDialog extends Alert {

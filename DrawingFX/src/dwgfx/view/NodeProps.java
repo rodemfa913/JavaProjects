@@ -7,16 +7,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 
 /**
- * Controller class for the root layout of properties dialog.
- * The dialog components depends of item to be edited, which
- * can be the entire drawing, a layer or one of the shapes.
+ * Controller class of the root layout of properties dialog.
  * @author rodemfa
  */
 public class NodeProps implements Properties {
     @FXML private TextField idText;
     @FXML private VBox propsRoot;
     private Node item;
-    private Properties controller;
+    private Properties formController;
     
     /**
      * Sets the item for edition.
@@ -34,18 +32,17 @@ public class NodeProps implements Properties {
         Region root = loader.load();
         VBox.setVgrow(root, Priority.ALWAYS);
         propsRoot.getChildren().set(1, root);
-        controller = loader.getController();
-        controller.setItem(item);
+        formController = loader.getController();
+        formController.setItem(item);
     }
 
     /**
-     * Applies the edition on item.
-     * All the Exceptions thrown by any component will be caught here.
+     * Applies the changes on item.
      */
     @Override public void handleApply() {
         item.setId(idText.getText());
         try {
-            controller.handleApply();
+            formController.handleApply();
         } catch (Exception ex) {
             ExceptionDialog dialog = new ExceptionDialog(ex);
             dialog.showAndWait();

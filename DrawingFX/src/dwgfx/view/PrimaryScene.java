@@ -18,7 +18,7 @@ import javafx.scene.text.*;
 import javafx.stage.*;
 
 /**
- * Controller class for the primary user interface.
+ * Controller class of the primary user interface.
  * @author rodemfa
  */
 public class PrimaryScene implements Initializable {
@@ -182,7 +182,8 @@ public class PrimaryScene implements Initializable {
     }
     
     /**
-     * Sets a reference to the primary Stage. This method is called by the main Application.
+     * Sets a reference to the primary Stage.
+     * This method is called by the main Application.
      * @param stage the primary Stage.
      */
     public void setStage(Stage stage) {
