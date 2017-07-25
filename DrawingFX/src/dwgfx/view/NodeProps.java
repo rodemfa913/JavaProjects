@@ -15,6 +15,19 @@ public class NodeProps implements Properties {
     @FXML private VBox propsRoot;
     private Node item;
     private Properties formController;
+
+    /**
+     * Applies the changes on item.
+     */
+    @Override public void handleApply() {
+        item.setId(idText.getText());
+        try {
+            formController.handleApply();
+        } catch (Exception ex) {
+            ExceptionDialog dialog = new ExceptionDialog(ex);
+            dialog.showAndWait();
+        }
+    }
     
     /**
      * Sets the item for edition.
@@ -34,18 +47,5 @@ public class NodeProps implements Properties {
         propsRoot.getChildren().set(1, root);
         formController = loader.getController();
         formController.setItem(item);
-    }
-
-    /**
-     * Applies the changes on item.
-     */
-    @Override public void handleApply() {
-        item.setId(idText.getText());
-        try {
-            formController.handleApply();
-        } catch (Exception ex) {
-            ExceptionDialog dialog = new ExceptionDialog(ex);
-            dialog.showAndWait();
-        }
     }
 }

@@ -24,6 +24,28 @@ public class ArcProps implements Properties {
     @FXML private Spinner<Double> rySpin;
     @FXML private Spinner<Double> startSpin;
     private Shape shape;
+
+    /**
+     * Applies the changes on item.
+     */
+    @Override public void handleApply() {
+        shape.setLayoutX(cxSpin.getValue());
+        shape.setLayoutY(cySpin.getValue());
+        if (shape instanceof Circle) {
+            Circle circle = (Circle) shape;
+            circle.setRadius(rxSpin.getValue());
+        } else if (shape instanceof Ellipse) {
+            Ellipse ellipse = (Ellipse) shape;
+            ellipse.setRadiusX(rxSpin.getValue());
+            ellipse.setRadiusY(rySpin.getValue());
+        } else {
+            Arc arc = (Arc) shape;
+            arc.setRadiusX(rxSpin.getValue());
+            arc.setRadiusY(rySpin.getValue());
+            arc.setStartAngle(startSpin.getValue());
+            arc.setLength(lengthSpin.getValue());
+        }
+    }
     
     /**
      * Sets the item for edition.
@@ -55,28 +77,6 @@ public class ArcProps implements Properties {
                 startSpin.getValueFactory().setValue(arc.getStartAngle());
                 lengthSpin.getValueFactory().setValue(arc.getLength());
             }
-        }
-    }
-
-    /**
-     * Applies the changes on item.
-     */
-    @Override public void handleApply() {
-        shape.setLayoutX(cxSpin.getValue());
-        shape.setLayoutY(cySpin.getValue());
-        if (shape instanceof Circle) {
-            Circle circle = (Circle) shape;
-            circle.setRadius(rxSpin.getValue());
-        } else if (shape instanceof Ellipse) {
-            Ellipse ellipse = (Ellipse) shape;
-            ellipse.setRadiusX(rxSpin.getValue());
-            ellipse.setRadiusY(rySpin.getValue());
-        } else {
-            Arc arc = (Arc) shape;
-            arc.setRadiusX(rxSpin.getValue());
-            arc.setRadiusY(rySpin.getValue());
-            arc.setStartAngle(startSpin.getValue());
-            arc.setLength(lengthSpin.getValue());
         }
     }
 }

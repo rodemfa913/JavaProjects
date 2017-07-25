@@ -15,6 +15,15 @@ public class DrawingProps implements Properties {
     @FXML private ColorPicker bgColorPicker;
     @FXML private Spinner<Double> widthSpin, heightSpin;
     private AnchorPane drawing;
+
+    /**
+     * Applies the changes on item.
+     */
+    @Override public void handleApply() {
+        drawing.setMinWidth(widthSpin.getValue());
+        drawing.setMinHeight(heightSpin.getValue());
+        drawing.setBackground(new Background(new BackgroundFill(bgColorPicker.getValue(), null, null)));
+    }
     
     /**
      * Sets the item for edition.
@@ -25,14 +34,5 @@ public class DrawingProps implements Properties {
         widthSpin.getValueFactory().setValue(drawing.getMinWidth());
         heightSpin.getValueFactory().setValue(drawing.getMinHeight());
         bgColorPicker.setValue((Color) drawing.getBackground().getFills().get(0).getFill());
-    }
-
-    /**
-     * Applies the changes on item.
-     */
-    @Override public void handleApply() {
-        drawing.setMinWidth(widthSpin.getValue());
-        drawing.setMinHeight(heightSpin.getValue());
-        drawing.setBackground(new Background(new BackgroundFill(bgColorPicker.getValue(), null, null)));
     }
 }

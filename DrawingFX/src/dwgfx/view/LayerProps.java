@@ -13,6 +13,14 @@ public class LayerProps implements Properties {
     @FXML private CheckBox visibleCheck;
     @FXML private Slider opacitySlider;
     private Group layer;
+
+    /**
+     * Applies the changes on item.
+     */
+    @Override public void handleApply() {
+        layer.setOpacity(opacitySlider.getValue() / 100.0);
+        layer.setVisible(visibleCheck.isSelected());
+    }
     
     /**
      * Sets the item for edition.
@@ -22,13 +30,5 @@ public class LayerProps implements Properties {
         layer = (Group) item;
         opacitySlider.setValue(100.0 * layer.getOpacity());
         visibleCheck.setSelected(layer.isVisible());
-    }
-
-    /**
-     * Applies the changes on item.
-     */
-    @Override public void handleApply() {
-        layer.setOpacity(opacitySlider.getValue() / 100.0);
-        layer.setVisible(visibleCheck.isSelected());
     }
 }

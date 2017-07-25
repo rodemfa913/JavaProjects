@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
+import javafx.scene.text.Text;
 
 /**
  * Controller class of Shape form layout of properties dialog.
@@ -32,6 +33,19 @@ public class ShapeProps implements Initializable, Properties {
     }
 
     /**
+     * Applies the changes on item.
+     * @throws Exception ...
+     */
+    @Override public void handleApply() throws Exception {
+        shapeController.handleApply();
+        shape.setFill(fillColorPicker.getValue());
+        shape.setStroke(strokeColorPicker.getValue());
+        shape.setStrokeWidth(strokeWidthSpin.getValue());
+        shape.setStrokeLineCap(lineCapCombo.getValue());
+        shape.setStrokeLineJoin(lineJoinCombo.getValue());
+    }
+
+    /**
      * Sets the item for edition.
      * @param item the item to be edited.
      * @throws Exception in the case of loading error.
@@ -45,6 +59,7 @@ public class ShapeProps implements Initializable, Properties {
         lineJoinCombo.setValue(shape.getStrokeLineJoin());
         FXMLLoader loader = new FXMLLoader();
         String filePath =
+                shape instanceof Text ? "TextProps.fxml" :
                 shape instanceof Rectangle ? "RectProps.fxml" :
                 shape instanceof Path ? "PathProps.fxml" : "ArcProps.fxml";
         loader.setLocation(getClass().getResource(filePath));
@@ -52,19 +67,5 @@ public class ShapeProps implements Initializable, Properties {
         genTitledPane.setContent(root);
         shapeController = loader.getController();
         shapeController.setItem(shape);
-    }
-
-    /**
-     * Applies the changes on item.
-     * @throws Exception it can be thrown if the Shape is a Path or Text;
-     * see the respective controller classes for details.
-     */
-    @Override public void handleApply() throws Exception {
-        shapeController.handleApply();
-        shape.setFill(fillColorPicker.getValue());
-        shape.setStroke(strokeColorPicker.getValue());
-        shape.setStrokeWidth(strokeWidthSpin.getValue());
-        shape.setStrokeLineCap(lineCapCombo.getValue());
-        shape.setStrokeLineJoin(lineJoinCombo.getValue());
     }
 }

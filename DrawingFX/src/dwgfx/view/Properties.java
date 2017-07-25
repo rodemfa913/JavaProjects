@@ -10,16 +10,16 @@ import javafx.scene.Node;
  */
 public interface Properties {
     /**
-     * Sets the item for edition.
-     * @param item the item to be edited.
+     * Applies the changes on item.
      * @throws Exception can or cannot throw an Exception;
      * see the class implementations for details.
      */
-    public void setItem(Node item) throws Exception;
+    public void handleApply() throws Exception;
     
     /**
-     * Applies the changes on item.
-     * @throws Exception idem for the {@link #setItem(Node) setItem()} method.
+     * Sets the item for edition.
+     * @param item the item to be edited.
+     * @throws Exception idem for the {@link #handleApply() handleApply} method.
      */
-    public void handleApply() throws Exception;
+    public void setItem(Node item) throws Exception;
 }
