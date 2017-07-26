@@ -15,6 +15,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.scene.text.*;
+import javafx.scene.transform.Affine;
 import javafx.stage.*;
 
 /**
@@ -128,6 +129,7 @@ public class PrimaryScene implements Initializable {
             }
             shape.setId("item");
             shape.idProperty().addListener(idListener);
+            shape.getTransforms().add(new Affine());
             shape.setOnMouseClicked(shapeHandler);
             Group layer = (Group) layItem.getValue();
             layer.getChildren().add(shape);

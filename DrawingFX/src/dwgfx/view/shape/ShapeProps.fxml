@@ -63,7 +63,7 @@
                 <VBox spacing="3.0">
                     <children>
                         <Label text="Transforms:" />
-                        <TextArea prefHeight="200.0" prefWidth="200.0" wrapText="true">
+                        <TextArea fx:id="transText" prefHeight="200.0" prefWidth="200.0" wrapText="true">
                             <font>
                                 <Font name="Monospaced Regular" size="13.0" />
                             </font>

@@ -1,5 +1,6 @@
 package dwgfx.view.shape;
 
+import dwgfx.util.TransUtil;
 import dwgfx.view.Properties;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -10,6 +11,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.scene.text.Text;
+import javafx.scene.transform.Affine;
 
 /**
  * Controller class of Shape form layout of properties dialog.
@@ -24,6 +26,7 @@ public class ShapeProps implements Initializable, Properties {
     @FXML private ComboBox<StrokeLineCap> lineCapCombo;
     @FXML private ComboBox<StrokeLineJoin> lineJoinCombo;
     @FXML private Spinner<Double> strokeWidthSpin;
+    @FXML private TextArea transText;
     @FXML private TitledPane genTitledPane;
     private Properties shapeController;
     private Shape shape;
@@ -34,7 +37,9 @@ public class ShapeProps implements Initializable, Properties {
 
     /**
      * Applies the changes on item.
-     * @throws Exception ...
+     * @throws Exception if the Transforms property is bad formatted;
+     * if the Shape is a Path, can or cannot thrown an Exception;
+     * see the {@link PathProps#handleApply() PathProps} class for details.
      */
     @Override public void handleApply() throws Exception {
         shapeController.handleApply();
@@ -43,6 +48,7 @@ public class ShapeProps implements Initializable, Properties {
         shape.setStrokeWidth(strokeWidthSpin.getValue());
         shape.setStrokeLineCap(lineCapCombo.getValue());
         shape.setStrokeLineJoin(lineJoinCombo.getValue());
+        shape.getTransforms().set(0, TransUtil.parseTransform(transText.getText()));
     }
 
     /**
@@ -57,6 +63,7 @@ public class ShapeProps implements Initializable, Properties {
         strokeWidthSpin.getValueFactory().setValue(shape.getStrokeWidth());
         lineCapCombo.setValue(shape.getStrokeLineCap());
         lineJoinCombo.setValue(shape.getStrokeLineJoin());
+        transText.setText(TransUtil.toString((Affine) shape.getTransforms().get(0)));
         FXMLLoader loader = new FXMLLoader();
         String filePath =
                 shape instanceof Text ? "TextProps.fxml" :
