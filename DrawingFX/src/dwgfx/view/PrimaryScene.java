@@ -3,7 +3,7 @@ package dwgfx.view;
 import dialogs.ExceptionDialog;
 import dwgfx.util.TreeCellFactory;
 import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.*;
 import javafx.beans.value.*;
 import javafx.event.EventHandler;
 import javafx.fxml.*;
@@ -73,15 +73,16 @@ public class PrimaryScene implements Initializable {
     
     @Override public void initialize(URL url, ResourceBundle rb) {
         nodeTree.setCellFactory(new TreeCellFactory());
-        MultipleSelectionModel<TreeItem<Node>> selectionModel = nodeTree.getSelectionModel();
-        selectionModel.selectedItemProperty().addListener(new TreeSelectionListener());
+        MultipleSelectionModel<TreeItem<Node>> selector = nodeTree.getSelectionModel();
+        selector.selectedItemProperty().addListener(new TreeSelectionListener());
         canvas.setId("Drawing");
         idListener = new IdListener();
         canvas.idProperty().addListener(idListener);
         canvas.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
         nodeTree.setRoot(new TreeItem<>(canvas));
-        selectionModel.select(0);
+        selector.select(0);
         shapeHandler = new ShapeHandler();
+        //extFilter = new ExtensionFilter("XML files (*.xml)", "*.xml");
     }
     
     @FXML private void handleAdd() {
@@ -137,6 +138,26 @@ public class PrimaryScene implements Initializable {
         }
     }
     
+    @FXML private void handleDelete() {
+        MultipleSelectionModel<TreeItem<Node>> selector = nodeTree.getSelectionModel();
+        TreeItem<Node> treeItem = selector.getSelectedItem();
+        TreeItem<Node> tiParent = treeItem.getParent();
+        if (tiParent != null) {
+            List<TreeItem<Node>> tiList = tiParent.getChildren();
+            Node item = treeItem.getValue();
+            Parent parent = item.getParent();
+            List<Node> list;
+            if (parent instanceof Group) {
+                list = ((Group) parent).getChildren();
+            } else {
+                list = ((AnchorPane) parent).getChildren();
+            }
+            selector.select(0);
+            tiList.remove(treeItem);
+            list.remove(item);
+        }
+    }
+    
     @FXML private void handleEdit() {
         Node item = nodeTree.getSelectionModel().getSelectedItem().getValue();
         FXMLLoader loader = new FXMLLoader();
@@ -154,6 +175,58 @@ public class PrimaryScene implements Initializable {
         } catch (Exception ex) {
             ExceptionDialog dialog = new ExceptionDialog(ex);
             dialog.showAndWait();
+        }
+    }
+    
+    @FXML private void handleMoveBack() {
+        MultipleSelectionModel<TreeItem<Node>> selector = nodeTree.getSelectionModel();
+        TreeItem<Node> treeItem = selector.getSelectedItem();
+        TreeItem<Node> tiParent = treeItem.getParent();
+        if (tiParent != null) {
+            List<TreeItem<Node>> tiList = tiParent.getChildren();
+            int index = tiList.indexOf(treeItem);
+            if (index > 0) {
+                Node item = treeItem.getValue();
+                Parent parent = item.getParent();
+                List<Node> list;
+                if (parent instanceof Group) {
+                    list = ((Group) parent).getChildren();
+                } else {
+                    list = ((AnchorPane) parent).getChildren();
+                }
+                selector.select(0);
+                tiList.remove(treeItem);
+                tiList.add(index - 1, treeItem);
+                list.remove(item);
+                list.add(index - 1, item);
+                selector.select(treeItem);
+            }
+        }
+    }
+    
+    @FXML private void handleMoveForward() {
+        MultipleSelectionModel<TreeItem<Node>> selector = nodeTree.getSelectionModel();
+        TreeItem<Node> treeItem = selector.getSelectedItem();
+        TreeItem<Node> tiParent = treeItem.getParent();
+        if (tiParent != null) {
+            List<TreeItem<Node>> tiList = tiParent.getChildren();
+            int index = tiList.indexOf(treeItem);
+            if (index < tiList.size()) {
+                Node item = treeItem.getValue();
+                Parent parent = item.getParent();
+                List<Node> list;
+                if (parent instanceof Group) {
+                    list = ((Group) parent).getChildren();
+                } else {
+                    list = ((AnchorPane) parent).getChildren();
+                }
+                selector.select(0);
+                tiList.remove(treeItem);
+                tiList.add(index + 1, treeItem);
+                list.remove(item);
+                list.add(index + 1, item);
+                selector.select(treeItem);
+            }
         }
     }
     
