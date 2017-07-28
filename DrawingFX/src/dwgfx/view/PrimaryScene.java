@@ -10,7 +10,7 @@ import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.effect.InnerShadow;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
@@ -25,7 +25,10 @@ import javafx.stage.*;
 public class PrimaryScene implements Initializable {
     @FXML private AnchorPane canvas;
     @FXML private ComboBox<String> typeCombo;
+    @FXML private ScrollPane canvasScroll;
+    @FXML private Slider zoomSlider;
     @FXML private TreeView<Node> nodeTree;
+    //private ExtensionFilter extFilter;
     private IdListener idListener;
     private ShapeHandler shapeHandler;
     private Stage primaryStage;
@@ -244,6 +247,23 @@ public class PrimaryScene implements Initializable {
     
     @FXML private void handleSave() {
         System.out.println("Save menu item activated.");
+    }
+    
+    @FXML private void handleZoomKey(KeyEvent event) {
+        KeyCode key = event.getCode();
+        if (key == KeyCode.LEFT || key == KeyCode.RIGHT) {
+            handleZoomMouse();
+        }
+    }
+    
+    @FXML private void handleZoomMouse() {
+        double zoom = Math.pow(2, 0.5 * zoomSlider.getValue());
+        double h = canvasScroll.getHvalue();
+        double v = canvasScroll.getVvalue();
+        canvas.setScaleX(zoom);
+        canvas.setScaleY(zoom);
+        canvasScroll.setHvalue(h);
+        canvasScroll.setVvalue(v);
     }
     
     private TreeItem<Node> addLayer() {

@@ -41,6 +41,7 @@
                         </ImageView>
                     </graphic>
                 </MenuButton>
+                <Separator orientation="VERTICAL" />
                 <ComboBox fx:id="typeCombo" promptText="Types">
                     <items>
                         <FXCollections fx:factory="observableArrayList">
@@ -76,6 +77,9 @@
                         </ImageView>
                     </graphic>
                 </Button>
+                <Separator orientation="VERTICAL" />
+                <Label text="Zoom Factor:" />
+                <Slider fx:id="zoomSlider" blockIncrement="1.0" majorTickUnit="6.0" max="6.0" min="-6.0" minorTickCount="2" onKeyReleased="#handleZoomKey" onMouseReleased="#handleZoomMouse" showTickMarks="true" />
             </children>
             <BorderPane.margin>
                 <Insets bottom="3.0" />
@@ -90,11 +94,11 @@
         </TreeView>
     </left>
     <center>
-        <ScrollPane hbarPolicy="ALWAYS" prefHeight="450.0" prefWidth="450.0" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
+        <ScrollPane fx:id="canvasScroll" hbarPolicy="ALWAYS" prefHeight="450.0" prefWidth="450.0" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
             <content>
                 <Group>
                     <children>
-                        <AnchorPane fx:id="canvas" prefHeight="400.0" prefWidth="400.0" />
+                        <AnchorPane fx:id="canvas" minHeight="400.0" minWidth="400.0" />
                     </children>
                 </Group>
             </content>
