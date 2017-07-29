@@ -1,7 +1,9 @@
 package dwgfx.view;
 
 import dialogs.ExceptionDialog;
+import dwgfx.model.Drawing;
 import dwgfx.util.TreeCellFactory;
+import java.io.File;
 import java.net.URL;
 import java.util.*;
 import javafx.beans.value.*;
@@ -17,6 +19,8 @@ import javafx.scene.shape.*;
 import javafx.scene.text.*;
 import javafx.scene.transform.Affine;
 import javafx.stage.*;
+import javafx.stage.FileChooser.ExtensionFilter;
+import javax.xml.bind.*;
 
 /**
  * Controller class of the primary user interface.
@@ -28,10 +32,12 @@ public class PrimaryScene implements Initializable {
     @FXML private ScrollPane canvasScroll;
     @FXML private Slider zoomSlider;
     @FXML private TreeView<Node> nodeTree;
-    //private ExtensionFilter extFilter;
+    private FileChooser fileChooser;
     private IdListener idListener;
+    private Marshaller m;
     private ShapeHandler shapeHandler;
     private Stage primaryStage;
+    private Unmarshaller um;
     
     private class IdListener implements ChangeListener<String> {
         @Override public void changed(
@@ -78,14 +84,23 @@ public class PrimaryScene implements Initializable {
         nodeTree.setCellFactory(new TreeCellFactory());
         MultipleSelectionModel<TreeItem<Node>> selector = nodeTree.getSelectionModel();
         selector.selectedItemProperty().addListener(new TreeSelectionListener());
-        canvas.setId("Drawing");
         idListener = new IdListener();
         canvas.idProperty().addListener(idListener);
         canvas.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
         nodeTree.setRoot(new TreeItem<>(canvas));
         selector.select(0);
         shapeHandler = new ShapeHandler();
-        //extFilter = new ExtensionFilter("XML files (*.xml)", "*.xml");
+        fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new ExtensionFilter("XML files (*.xml)", "*.xml"));
+        try {
+            JAXBContext context = JAXBContext.newInstance(Drawing.class);
+            um = context.createUnmarshaller();
+            m = context.createMarshaller();
+            m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+        } catch (Exception ex) {
+            ExceptionDialog dialog = new ExceptionDialog(ex);
+            dialog.showAndWait();
+        }
     }
     
     @FXML private void handleAdd() {
@@ -234,11 +249,29 @@ public class PrimaryScene implements Initializable {
     }
     
     @FXML private void handleNew() {
-        System.out.println("New menu item activated.");
+        nodeTree.getSelectionModel().select(0);
+        nodeTree.getRoot().getChildren().clear();
+        canvas.getChildren().clear();
+        canvas.setId("drawing");
+        canvas.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
+        canvas.setMinWidth(400.0);
+        canvas.setMinHeight(400.0);
+        zoomSlider.setValue(0);
+        handleZoomMouse();
     }
     
     @FXML private void handleOpen() {
-        System.out.println("Open menu item activated.");
+        File file = fileChooser.showOpenDialog(primaryStage);
+        if (file != null) {
+            try {
+                Drawing d = (Drawing) um.unmarshal(file);
+                handleNew();
+                d.load(canvas);
+            } catch (Exception ex) {
+                ExceptionDialog dialog = new ExceptionDialog(ex);
+                dialog.showAndWait();
+            }
+        }
     }
     
     @FXML private void handleQuit() {
@@ -246,7 +279,20 @@ public class PrimaryScene implements Initializable {
     }
     
     @FXML private void handleSave() {
-        System.out.println("Save menu item activated.");
+        File file = fileChooser.showSaveDialog(primaryStage);
+        if (file != null) {
+            String path = file.getPath();
+            if (!path.endsWith(".xml")) {
+                file = new File(path + ".xml");
+            }
+            Drawing d = new Drawing(canvas);
+            try {
+                m.marshal(d, file);
+            } catch (Exception ex) {
+                ExceptionDialog dialog = new ExceptionDialog(ex);
+                dialog.showAndWait();
+            }
+        }
     }
     
     @FXML private void handleZoomKey(KeyEvent event) {

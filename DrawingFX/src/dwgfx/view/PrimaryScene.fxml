@@ -98,7 +98,7 @@
             <content>
                 <Group>
                     <children>
-                        <AnchorPane fx:id="canvas" minHeight="400.0" minWidth="400.0" />
+                        <AnchorPane fx:id="canvas" id="drawing" minHeight="400.0" minWidth="400.0" />
                     </children>
                 </Group>
             </content>
