@@ -264,9 +264,9 @@ public class PrimaryScene implements Initializable {
         File file = fileChooser.showOpenDialog(primaryStage);
         if (file != null) {
             try {
-                Drawing d = (Drawing) um.unmarshal(file);
+                Drawing drawing = (Drawing) um.unmarshal(file);
                 handleNew();
-                d.load(canvas);
+                drawing.load(canvas);
             } catch (Exception ex) {
                 ExceptionDialog dialog = new ExceptionDialog(ex);
                 dialog.showAndWait();
@@ -285,9 +285,9 @@ public class PrimaryScene implements Initializable {
             if (!path.endsWith(".xml")) {
                 file = new File(path + ".xml");
             }
-            Drawing d = new Drawing(canvas);
+            Drawing drawing = new Drawing(canvas);
             try {
-                m.marshal(d, file);
+                m.marshal(drawing, file);
             } catch (Exception ex) {
                 ExceptionDialog dialog = new ExceptionDialog(ex);
                 dialog.showAndWait();
