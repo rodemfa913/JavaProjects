@@ -1,5 +1,7 @@
 package dwgfx.bind;
 
+import java.util.*;
+import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javax.xml.bind.annotation.*;
@@ -15,6 +17,8 @@ public class Drawing {
     @XmlAttribute private final double width;
     @XmlAttribute private final String id;
     @XmlElement private final BColor background;
+    @XmlElementWrapper @XmlElement(name = "layer")
+    private final List<Layer> layers;
     
     /**
      * Creates a default instance of Drawing.
@@ -23,6 +27,7 @@ public class Drawing {
         id = "drawing";
         width = height = 400.0;
         background = new BColor();
+        layers = new ArrayList<>();
     }
     
     /**
@@ -34,6 +39,10 @@ public class Drawing {
         width = drawing.getMinWidth();
         height = drawing.getMinHeight();
         background = new BColor((Color) drawing.getBackground().getFills().get(0).getFill());
+        layers = new ArrayList<>();
+        drawing.getChildren().forEach((layer) -> {
+            layers.add(new Layer((Group) layer));
+        });
     }
     
     /**
@@ -45,5 +54,10 @@ public class Drawing {
         drawing.setMinWidth(width);
         drawing.setMinHeight(height);
         drawing.setBackground(new Background(new BackgroundFill(background.get(), null, null)));
+        List<Node> children = drawing.getChildren();
+        children.clear();
+        layers.forEach((layer) -> {
+            children.add(layer.get());
+        });
     }
 }
