@@ -1,7 +1,7 @@
 package dwgfx.view;
 
 import dialogs.ExceptionDialog;
-import dwgfx.model.Drawing;
+import dwgfx.bind.Drawing;
 import dwgfx.util.TreeCellFactory;
 import java.io.File;
 import java.net.URL;

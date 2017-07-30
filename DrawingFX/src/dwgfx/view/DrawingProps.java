@@ -8,7 +8,7 @@ import javafx.scene.paint.Color;
 
 /**
  * Controller class of drawing form layout of properties dialog.
- * The form is loaded when the item to be edited is the entire drawing.
+ * The form is loaded when the item to be edited is the drawing surface.
  * @author rodemfa
  */
 public class DrawingProps implements Properties {
