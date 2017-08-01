@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.*;
 
 /**
  * Binding class for a layer.
- * A layer is represented by a Group.
+ * A layer is represented by the Group class.
  * @author Rodemfa913
  */
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -18,7 +18,7 @@ public class Layer {
     @XmlElementWrapper @XmlElements({
         @XmlElement(name = "rectangle", type = BRectangle.class)
     })
-    private List<BShape> items;
+    private final List<BShape> items;
     
     /**
      * Creates a default instance of Layer.

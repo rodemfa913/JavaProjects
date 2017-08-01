@@ -4,7 +4,7 @@ import javafx.scene.shape.*;
 import javax.xml.bind.annotation.XmlAttribute;
 
 /**
- * ...
+ * Binding class for a Rectangle.
  * @author rodemfa
  */
 public class BRectangle extends BShape {
@@ -14,7 +14,7 @@ public class BRectangle extends BShape {
     @XmlAttribute private final double width;
     
     /**
-     * ...
+     * Creates a default instance of BRectangle.
      */
     public BRectangle() {
         super();
@@ -24,8 +24,8 @@ public class BRectangle extends BShape {
     }
     
     /**
-     * ...
-     * @param rect ...
+     * Creates an instance of BRectangle with properties of specified Rectangle.
+     * @param rect a Rectangle.
      */
     public BRectangle(Rectangle rect) {
         super(rect);

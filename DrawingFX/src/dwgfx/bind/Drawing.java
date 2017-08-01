@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.*;
 
 /**
  * Binding class for the drawing surface.
- * The drawing surface is represented by an AnchorPane.
+ * The drawing surface is represented the AnchorPane class.
  * @author Rodemfa913
  */
 @XmlRootElement(name = "drawing") @XmlAccessorType(XmlAccessType.FIELD)
