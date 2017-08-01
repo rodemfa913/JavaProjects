@@ -1,6 +1,8 @@
 package dwgfx.bind;
 
-import javafx.scene.Group;
+import java.util.*;
+import javafx.scene.*;
+import javafx.scene.shape.Rectangle;
 import javax.xml.bind.annotation.*;
 
 /**
@@ -10,9 +12,13 @@ import javax.xml.bind.annotation.*;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Layer {
-    @XmlAttribute private final String id;
-    @XmlAttribute private final double opacity;
     @XmlAttribute private final boolean visible;
+    @XmlAttribute private final double opacity;
+    @XmlAttribute private final String id;
+    @XmlElementWrapper @XmlElements({
+        @XmlElement(name = "rectangle", type = BRectangle.class)
+    })
+    private List<BShape> items;
     
     /**
      * Creates a default instance of Layer.
@@ -21,6 +27,7 @@ public class Layer {
         id = "layer";
         opacity = 1.0;
         visible = true;
+        items = new ArrayList<>();
     }
     
     /**
@@ -31,6 +38,12 @@ public class Layer {
         id = layer.getId();
         opacity = layer.getOpacity();
         visible = layer.isVisible();
+        items = new ArrayList<>();
+        layer.getChildren().forEach((item) -> {
+            // if (...) else {
+            items.add(new BRectangle((Rectangle) item));
+            // }
+        });
     }
     
     /**
@@ -42,6 +55,10 @@ public class Layer {
         layer.setId(id);
         layer.setOpacity(opacity);
         layer.setVisible(visible);
+        List<Node> children = layer.getChildren();
+        items.forEach((item) -> {
+            children.add(item.get());
+        });
         return layer;
     }
 }

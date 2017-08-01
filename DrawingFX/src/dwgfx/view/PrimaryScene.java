@@ -146,6 +146,8 @@ public class PrimaryScene implements Initializable {
                 default:
                     shape = new Rectangle(200, 150);
             }
+            shape.setLayoutX(100.0);
+            shape.setLayoutY(100.0);
             shape.setId("item");
             shape.idProperty().addListener(idListener);
             shape.getTransforms().add(new Affine());
@@ -267,11 +269,17 @@ public class PrimaryScene implements Initializable {
                 Drawing drawing = (Drawing) um.unmarshal(file);
                 handleNew();
                 drawing.load(canvas);
-                List<TreeItem<Node>> layItems = nodeTree.getRoot().getChildren();
+                TreeItem<Node> root = nodeTree.getRoot();
                 canvas.getChildrenUnmodifiable().forEach((layer) -> {
                     layer.idProperty().addListener(idListener);
                     TreeItem<Node> layItem = new TreeItem<>(layer);
-                    layItems.add(layItem);
+                    root.getChildren().add(layItem);
+                    Parent parent = (Parent) layer;
+                    parent.getChildrenUnmodifiable().forEach((item) -> {
+                        item.idProperty().addListener(idListener);
+                        item.setOnMouseClicked(shapeHandler);
+                        layItem.getChildren().add(new TreeItem<>(item));
+                    });
                 });
             } catch (Exception ex) {
                 ExceptionDialog dialog = new ExceptionDialog(ex);

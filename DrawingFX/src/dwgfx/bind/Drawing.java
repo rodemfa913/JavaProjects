@@ -55,7 +55,6 @@ public class Drawing {
         drawing.setMinHeight(height);
         drawing.setBackground(new Background(new BackgroundFill(background.get(), null, null)));
         List<Node> children = drawing.getChildren();
-        children.clear();
         layers.forEach((layer) -> {
             children.add(layer.get());
         });
