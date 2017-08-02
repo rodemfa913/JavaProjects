@@ -268,19 +268,8 @@ public class PrimaryScene implements Initializable {
             try {
                 Drawing drawing = (Drawing) um.unmarshal(file);
                 handleNew();
-                drawing.load(canvas);
                 TreeItem<Node> root = nodeTree.getRoot();
-                canvas.getChildrenUnmodifiable().forEach((layer) -> {
-                    layer.idProperty().addListener(idListener);
-                    TreeItem<Node> layItem = new TreeItem<>(layer);
-                    root.getChildren().add(layItem);
-                    Parent parent = (Parent) layer;
-                    parent.getChildrenUnmodifiable().forEach((item) -> {
-                        item.idProperty().addListener(idListener);
-                        item.setOnMouseClicked(shapeHandler);
-                        layItem.getChildren().add(new TreeItem<>(item));
-                    });
-                });
+                drawing.load(canvas, root, idListener, shapeHandler);
             } catch (Exception ex) {
                 ExceptionDialog dialog = new ExceptionDialog(ex);
                 dialog.showAndWait();

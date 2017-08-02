@@ -1,8 +1,12 @@
 package dwgfx.bind;
 
 import java.util.*;
+import javafx.beans.value.ChangeListener;
+import javafx.event.EventHandler;
 import javafx.scene.*;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.control.TreeItem;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.*;
 import javax.xml.bind.annotation.*;
 
 /**
@@ -18,7 +22,7 @@ public class Layer {
     @XmlElementWrapper @XmlElements({
         @XmlElement(name = "rectangle", type = BRectangle.class)
     })
-    private final List<BShape> items;
+    private final List<BShape> shapes;
     
     /**
      * Creates a default instance of Layer.
@@ -27,7 +31,7 @@ public class Layer {
         id = "layer";
         opacity = 1.0;
         visible = true;
-        items = new ArrayList<>();
+        shapes = new ArrayList<>();
     }
     
     /**
@@ -38,27 +42,49 @@ public class Layer {
         id = layer.getId();
         opacity = layer.getOpacity();
         visible = layer.isVisible();
-        items = new ArrayList<>();
+        shapes = new ArrayList<>();
         layer.getChildren().forEach((item) -> {
-            // if (...) else {
-            items.add(new BRectangle((Rectangle) item));
+            // if (item instanceof ...) {} else {
+            shapes.add(new BRectangle((Rectangle) item));
             // }
         });
     }
     
-    /**
+    /*/**
      * Gets a new layer with properties of Layer.
      * @return a new layer.
-     */
+     *
     public Group get() {
         Group layer = new Group();
         layer.setId(id);
         layer.setOpacity(opacity);
         layer.setVisible(visible);
         List<Node> children = layer.getChildren();
-        items.forEach((item) -> {
-            children.add(item.get());
+        shapes.forEach((shape) -> {
+            children.add(shape.get());
         });
         return layer;
+    }*/
+    
+    public void load(
+            Group layer, TreeItem<Node> layItem,
+            ChangeListener<String> idListener, EventHandler<MouseEvent> shapeHandler) {
+        layer.setId(id);
+        layer.setOpacity(opacity);
+        layer.setVisible(visible);
+        List<Node> shps = layer.getChildren();
+        List<TreeItem<Node>> shpItems = layItem.getChildren();
+        shapes.forEach((shape) -> {
+            Shape shp;
+            // if (shape instanceof ...) {} else {
+            shp = new Rectangle();
+            // }
+            TreeItem<Node> shpItem = new TreeItem<>(shp);
+            shape.load(shp);
+            shp.idProperty().addListener(idListener);
+            shp.setOnMouseClicked(shapeHandler);
+            shps.add(shp);
+            shpItems.add(shpItem);
+        });
     }
 }

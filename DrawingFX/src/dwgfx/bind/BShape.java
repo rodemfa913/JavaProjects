@@ -2,6 +2,7 @@ package dwgfx.bind;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
+import javafx.scene.transform.Affine;
 import javax.xml.bind.annotation.*;
 
 /**
@@ -42,11 +43,11 @@ public abstract class BShape {
         y = shape.getLayoutY();
     }
     
-    /**
+    /*/**
      * Loads a Shape with properties of BShape.
      * This method is called by subclasses that implements the {@link #get() get} method.
      * @param shape ...
-     */
+     *
     protected void load(Shape shape) {
         shape.setId(id);
         shape.setFill(fill.get());
@@ -54,6 +55,7 @@ public abstract class BShape {
         shape.setStrokeWidth(stroke.getWidth());
         shape.setStrokeLineCap(stroke.getLineCap());
         shape.setStrokeLineJoin(stroke.getLineJoin());
+        shape.getTransforms().add(new Affine());
         shape.setLayoutX(x);
         shape.setLayoutY(y);
     }
@@ -61,6 +63,18 @@ public abstract class BShape {
     /**
      * Gets a new Shape with properties of BShape.
      * @return a new Shape.
-     */
-    public abstract Shape get();
+     *
+    public abstract Shape get();*/
+    
+    public void load(Shape shape) {
+        shape.setId(id);
+        shape.setFill(fill.get());
+        shape.setStroke(stroke.getColor());
+        shape.setStrokeWidth(stroke.getWidth());
+        shape.setStrokeLineCap(stroke.getLineCap());
+        shape.setStrokeLineJoin(stroke.getLineJoin());
+        shape.getTransforms().add(new Affine());
+        shape.setLayoutX(x);
+        shape.setLayoutY(y);
+    }
 }
