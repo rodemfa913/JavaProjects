@@ -2,7 +2,7 @@ package dwgfx.bind;
 
 import java.util.*;
 import javafx.scene.*;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.*;
 import javax.xml.bind.annotation.*;
 
 /**
@@ -16,9 +16,10 @@ public class Layer {
     @XmlAttribute private final double opacity;
     @XmlAttribute private final String id;
     @XmlElementWrapper @XmlElements({
+        @XmlElement(name = "circle", type = BCircle.class),
         @XmlElement(name = "rectangle", type = BRectangle.class)
     })
-    private final List<BShape> items;
+    private final List<BShape> shapes;
     
     /**
      * Creates a default instance of Layer.
@@ -27,7 +28,7 @@ public class Layer {
         id = "layer";
         opacity = 1.0;
         visible = true;
-        items = new ArrayList<>();
+        shapes = new ArrayList<>();
     }
     
     /**
@@ -38,11 +39,13 @@ public class Layer {
         id = layer.getId();
         opacity = layer.getOpacity();
         visible = layer.isVisible();
-        items = new ArrayList<>();
-        layer.getChildren().forEach((item) -> {
-            // if (...) else {
-            items.add(new BRectangle((Rectangle) item));
-            // }
+        shapes = new ArrayList<>();
+        layer.getChildren().forEach((shape) -> {
+            if (shape instanceof Circle) {
+                shapes.add(new BCircle((Circle) shape));
+            } else {
+                shapes.add(new BRectangle((Rectangle) shape));
+            }
         });
     }
     
@@ -56,8 +59,8 @@ public class Layer {
         layer.setOpacity(opacity);
         layer.setVisible(visible);
         List<Node> children = layer.getChildren();
-        items.forEach((item) -> {
-            children.add(item.get());
+        shapes.forEach((shape) -> {
+            children.add(shape.get());
         });
         return layer;
     }
