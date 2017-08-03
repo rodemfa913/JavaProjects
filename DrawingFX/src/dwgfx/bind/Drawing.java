@@ -1,11 +1,7 @@
 package dwgfx.bind;
 
 import java.util.*;
-import javafx.beans.value.ChangeListener;
-import javafx.event.EventHandler;
 import javafx.scene.*;
-import javafx.scene.control.TreeItem;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javax.xml.bind.annotation.*;
@@ -49,10 +45,10 @@ public class Drawing {
         });
     }
     
-    /*/**
+    /**
      * Loads the drawing surface with properties of Drawing.
      * @param drawing the drawing surface.
-     *
+     */
     public void load(AnchorPane drawing) {
         drawing.setId(id);
         drawing.setMinWidth(width);
@@ -61,33 +57,6 @@ public class Drawing {
         List<Node> children = drawing.getChildren();
         layers.forEach((layer) -> {
             children.add(layer.get());
-        });
-    }*/
-    
-    /**
-     * Loads the drawing surface with properties of Drawing.
-     * Also adds a listener on your id property and a mouse event on the Shapes of the drawing.
-     * @param drawing the drawing surface.
-     * @param root
-     * @param idListener
-     * @param shapeHandler 
-     */
-    public void load(
-            AnchorPane drawing, TreeItem<Node> root,
-            ChangeListener<String> idListener, EventHandler<MouseEvent> shapeHandler) {
-        drawing.setId(id);
-        drawing.setMinWidth(width);
-        drawing.setMinHeight(height);
-        drawing.setBackground(new Background(new BackgroundFill(background.get(), null, null)));
-        List<Node> lays = drawing.getChildren();
-        List<TreeItem<Node>> layItems = root.getChildren();
-        layers.forEach((layer) -> {
-            Group lay = new Group();
-            TreeItem<Node> layItem = new TreeItem<>(lay);
-            layer.load(lay, layItem, idListener, shapeHandler);
-            lay.idProperty().addListener(idListener);
-            lays.add(lay);
-            layItems.add(layItem);
         });
     }
 }

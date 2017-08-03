@@ -35,20 +35,11 @@ public class BRectangle extends BShape {
         arcHeight = rect.getArcHeight();
     }
     
-    /*@Override public Shape get() {
+    @Override public Shape get() {
         Rectangle rect = new Rectangle(width, height);
         rect.setArcWidth(arcWidth);
         rect.setArcHeight(arcHeight);
         load(rect);
         return rect;
-    }*/
-    
-    @Override public void load(Shape shape) {
-        super.load(shape);
-        Rectangle rect = (Rectangle) shape;
-        rect.setWidth(width);
-        rect.setHeight(height);
-        rect.setArcWidth(arcWidth);
-        rect.setArcHeight(arcHeight);
     }
 }

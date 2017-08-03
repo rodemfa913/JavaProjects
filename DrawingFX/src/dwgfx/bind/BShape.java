@@ -15,6 +15,7 @@ public abstract class BShape {
     @XmlAttribute private final double x;
     @XmlAttribute private final double y;
     @XmlAttribute private final String id;
+    @XmlElement private final BAffine transform;
     @XmlElement private final BColor fill;
     @XmlElement private final Stroke stroke;
     
@@ -25,6 +26,7 @@ public abstract class BShape {
         id = "item";
         fill = new BColor();
         stroke = new Stroke();
+        transform = new BAffine();
         x = y = 100.0;
     }
     
@@ -39,15 +41,16 @@ public abstract class BShape {
                 (Color) shape.getStroke(), shape.getStrokeWidth(),
                 shape.getStrokeLineCap(), shape.getStrokeLineJoin()
         );
+        transform = new BAffine((Affine) shape.getTransforms().get(0));
         x = shape.getLayoutX();
         y = shape.getLayoutY();
     }
     
-    /*/**
+    /**
      * Loads a Shape with properties of BShape.
      * This method is called by subclasses that implements the {@link #get() get} method.
-     * @param shape ...
-     *
+     * @param shape a Shape.
+     */
     protected void load(Shape shape) {
         shape.setId(id);
         shape.setFill(fill.get());
@@ -55,7 +58,7 @@ public abstract class BShape {
         shape.setStrokeWidth(stroke.getWidth());
         shape.setStrokeLineCap(stroke.getLineCap());
         shape.setStrokeLineJoin(stroke.getLineJoin());
-        shape.getTransforms().add(new Affine());
+        shape.getTransforms().add(transform.get());
         shape.setLayoutX(x);
         shape.setLayoutY(y);
     }
@@ -63,18 +66,6 @@ public abstract class BShape {
     /**
      * Gets a new Shape with properties of BShape.
      * @return a new Shape.
-     *
-    public abstract Shape get();*/
-    
-    public void load(Shape shape) {
-        shape.setId(id);
-        shape.setFill(fill.get());
-        shape.setStroke(stroke.getColor());
-        shape.setStrokeWidth(stroke.getWidth());
-        shape.setStrokeLineCap(stroke.getLineCap());
-        shape.setStrokeLineJoin(stroke.getLineJoin());
-        shape.getTransforms().add(new Affine());
-        shape.setLayoutX(x);
-        shape.setLayoutY(y);
-    }
+     */
+    public abstract Shape get();
 }
