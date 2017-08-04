@@ -87,7 +87,7 @@
         </HBox>
     </top>
     <left>
-        <TreeView fx:id="nodeTree" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <TreeView fx:id="idTree" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <BorderPane.margin>
                 <Insets right="5.0" />
             </BorderPane.margin>

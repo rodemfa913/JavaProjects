@@ -30,6 +30,7 @@ public class MainApp extends Application {
     }
 
     /**
+     * Called by system.
      * @param args the command line arguments
      */
     public static void main(String[] args) {

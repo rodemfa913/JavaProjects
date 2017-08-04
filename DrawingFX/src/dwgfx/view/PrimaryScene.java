@@ -2,12 +2,10 @@ package dwgfx.view;
 
 import dialogs.ExceptionDialog;
 import dwgfx.bind.Drawing;
-import dwgfx.util.TreeCellFactory;
-import java.io.File;
+import dwgfx.util.TreeItemUtil;
 import java.net.URL;
 import java.util.*;
 import javafx.beans.value.*;
-import javafx.event.EventHandler;
 import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
@@ -16,14 +14,14 @@ import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
-import javafx.scene.text.*;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.scene.transform.Affine;
 import javafx.stage.*;
-import javafx.stage.FileChooser.ExtensionFilter;
 import javax.xml.bind.*;
 
 /**
- * Controller class of the primary user interface.
+ * ...
  * @author rodemfa
  */
 public class PrimaryScene implements Initializable {
@@ -31,66 +29,47 @@ public class PrimaryScene implements Initializable {
     @FXML private ComboBox<String> typeCombo;
     @FXML private ScrollPane canvasScroll;
     @FXML private Slider zoomSlider;
-    @FXML private TreeView<Node> nodeTree;
+    @FXML private TreeView<String> idTree;
     private FileChooser fileChooser;
-    private IdListener idListener;
+    private InnerShadow effect;
     private Marshaller m;
-    private ShapeHandler shapeHandler;
+    private Node selection;
     private Stage primaryStage;
+    private TreeItem<String> selItem;
     private Unmarshaller um;
     
-    private class IdListener implements ChangeListener<String> {
+    private class TreeListener implements ChangeListener<TreeItem<String>> {
         @Override public void changed(
-                ObservableValue<? extends String> observable,
-                String oldValue,
-                String newValue) {
-            nodeTree.refresh();
-        }
-    }
-    
-    private class ShapeHandler implements EventHandler<MouseEvent> {
-        @Override public void handle(MouseEvent event) {
-            Node selected = (Node) event.getSource();
-            Group layer = (Group) selected.getParent();
-            int i = canvas.getChildren().indexOf(layer);
-            int j = layer.getChildren().indexOf(selected);
-            TreeItem<Node> layItem = nodeTree.getRoot().getChildren().get(i);
-            TreeItem<Node> shpItem = layItem.getChildren().get(j);
-            nodeTree.getSelectionModel().select(shpItem);
-        }
-    }
-    
-    private class TreeListener implements ChangeListener<TreeItem<Node>> {
-        @Override public void changed(
-                ObservableValue<? extends TreeItem<Node>> observable,
-                TreeItem<Node> oldValue,
-                TreeItem<Node> newValue) {
-            InnerShadow effect;
-            if (oldValue == null || oldValue.getParent() == null) {
-                effect = new InnerShadow();
-            } else {
-                Node value = oldValue.getValue();
-                effect = (InnerShadow) value.getEffect();
-                value.setEffect(null);
+                ObservableValue<? extends TreeItem<String>> observable,
+                TreeItem<String> oldValue,
+                TreeItem<String> newValue) {
+            List<Integer> path;
+            if (oldValue != null) {
+                selection.setEffect(null);
             }
-            if (newValue != null && newValue.getParent() != null) {
-                newValue.getValue().setEffect(effect);
+            if (newValue != null) {
+                selItem = newValue;
+                path = TreeItemUtil.getTreePath(selItem);
+                selection = canvas;
+                path.forEach((index) -> {
+                    selection = ((Parent) selection).getChildrenUnmodifiable().get(index);
+                });
+                if (selection != canvas) {
+                    selection.setEffect(effect);
+                }
             }
         }
     }
     
     @Override public void initialize(URL url, ResourceBundle rb) {
-        nodeTree.setCellFactory(new TreeCellFactory());
-        MultipleSelectionModel<TreeItem<Node>> selector = nodeTree.getSelectionModel();
+        effect = new InnerShadow();
+        MultipleSelectionModel<TreeItem<String>> selector = idTree.getSelectionModel();
         selector.selectedItemProperty().addListener(new TreeListener());
-        idListener = new IdListener();
-        canvas.idProperty().addListener(idListener);
         canvas.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
-        nodeTree.setRoot(new TreeItem<>(canvas));
+        idTree.setRoot(new TreeItem<>(canvas.getId()));
         selector.select(0);
-        shapeHandler = new ShapeHandler();
         fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().add(new ExtensionFilter("XML files (*.xml)", "*.xml"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml"));
         try {
             JAXBContext context = JAXBContext.newInstance(Drawing.class);
             um = context.createUnmarshaller();
@@ -104,18 +83,20 @@ public class PrimaryScene implements Initializable {
     
     @FXML private void handleAdd() {
         String type = typeCombo.getValue();
-        if (type == null) {
+        if (type == null || selection instanceof AnchorPane) {
             type = "Layer";
         }
         if (type.equals("Layer")) {
-            addLayer();
+            Group layer = new Group();
+            layer.setId("layer");
+            canvas.getChildren().add(layer);
+            idTree.getRoot().getChildren().add(new TreeItem<>(layer.getId()));
         } else {
-            TreeItem<Node> layItem = nodeTree.getSelectionModel().getSelectedItem();
-            Node node = layItem.getValue();
-            if (node instanceof Shape) {
+            Node layer = selection;
+            TreeItem<String> layItem = selItem;
+            if (selection instanceof Shape) {
+                layer = layer.getParent();
                 layItem = layItem.getParent();
-            } else if (!(node instanceof Group)) {
-                layItem = addLayer();
             }
             Shape shape;
             switch (type) {
@@ -145,40 +126,35 @@ public class PrimaryScene implements Initializable {
                 default:
                     shape = new Rectangle(200, 150);
             }
+            shape.setId("shape");
             shape.setLayoutX(100.0);
             shape.setLayoutY(100.0);
-            shape.setId("item");
-            shape.idProperty().addListener(idListener);
             shape.getTransforms().add(new Affine());
-            shape.setOnMouseClicked(shapeHandler);
-            Group layer = (Group) layItem.getValue();
-            layer.getChildren().add(shape);
-            layItem.getChildren().add(new TreeItem<>(shape));
+            ((Group) layer).getChildren().add(shape);
+            layItem.getChildren().add(new TreeItem<>(shape.getId()));
         }
     }
     
     @FXML private void handleDelete() {
-        MultipleSelectionModel<TreeItem<Node>> selector = nodeTree.getSelectionModel();
-        TreeItem<Node> treeItem = selector.getSelectedItem();
-        TreeItem<Node> tiParent = treeItem.getParent();
-        if (tiParent != null) {
-            List<TreeItem<Node>> tiList = tiParent.getChildren();
-            Node item = treeItem.getValue();
-            Parent parent = item.getParent();
-            List<Node> list;
+        TreeItem<String> item = selItem;
+        TreeItem<String> itParent = item.getParent();
+        if (itParent != null) {
+            List<TreeItem<String>> itChildren = itParent.getChildren();
+            Node node = selection;
+            Parent parent = node.getParent();
+            List<Node> children;
             if (parent instanceof Group) {
-                list = ((Group) parent).getChildren();
+                children = ((Group) parent).getChildren();
             } else {
-                list = ((AnchorPane) parent).getChildren();
+                children = ((AnchorPane) parent).getChildren();
             }
-            selector.select(0);
-            tiList.remove(treeItem);
-            list.remove(item);
+            idTree.getSelectionModel().select(0);
+            children.remove(node);
+            itChildren.remove(item);
         }
     }
     
     @FXML private void handleEdit() {
-        Node item = nodeTree.getSelectionModel().getSelectedItem().getValue();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("NodeProps.fxml"));
         try {
@@ -189,125 +165,28 @@ public class PrimaryScene implements Initializable {
             propsStage.initModality(Modality.WINDOW_MODAL);
             propsStage.initOwner(primaryStage);
             NodeProps controller = loader.getController();
-            controller.setItem(item);
+            controller.setItem(selection);
             propsStage.showAndWait();
+            selItem.setValue(selection.getId());
         } catch (Exception ex) {
             ExceptionDialog dialog = new ExceptionDialog(ex);
             dialog.showAndWait();
         }
     }
     
-    @FXML private void handleMoveBack() {
-        MultipleSelectionModel<TreeItem<Node>> selector = nodeTree.getSelectionModel();
-        TreeItem<Node> treeItem = selector.getSelectedItem();
-        TreeItem<Node> tiParent = treeItem.getParent();
-        if (tiParent != null) {
-            List<TreeItem<Node>> tiList = tiParent.getChildren();
-            int index = tiList.indexOf(treeItem);
-            if (index > 0) {
-                Node item = treeItem.getValue();
-                Parent parent = item.getParent();
-                List<Node> list;
-                if (parent instanceof Group) {
-                    list = ((Group) parent).getChildren();
-                } else {
-                    list = ((AnchorPane) parent).getChildren();
-                }
-                selector.select(0);
-                tiList.remove(treeItem);
-                tiList.add(index - 1, treeItem);
-                list.remove(item);
-                list.add(index - 1, item);
-                selector.select(treeItem);
-            }
-        }
-    }
+    @FXML private void handleMoveBack() {}
     
-    @FXML private void handleMoveForward() {
-        MultipleSelectionModel<TreeItem<Node>> selector = nodeTree.getSelectionModel();
-        TreeItem<Node> treeItem = selector.getSelectedItem();
-        TreeItem<Node> tiParent = treeItem.getParent();
-        if (tiParent != null) {
-            List<TreeItem<Node>> tiList = tiParent.getChildren();
-            int index = tiList.indexOf(treeItem);
-            if (index < tiList.size()) {
-                Node item = treeItem.getValue();
-                Parent parent = item.getParent();
-                List<Node> list;
-                if (parent instanceof Group) {
-                    list = ((Group) parent).getChildren();
-                } else {
-                    list = ((AnchorPane) parent).getChildren();
-                }
-                selector.select(0);
-                tiList.remove(treeItem);
-                tiList.add(index + 1, treeItem);
-                list.remove(item);
-                list.add(index + 1, item);
-                selector.select(treeItem);
-            }
-        }
-    }
+    @FXML private void handleMoveForward() {}
     
-    @FXML private void handleNew() {
-        nodeTree.getSelectionModel().select(0);
-        nodeTree.getRoot().getChildren().clear();
-        canvas.getChildren().clear();
-        canvas.setId("drawing");
-        canvas.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
-        canvas.setMinWidth(400.0);
-        canvas.setMinHeight(400.0);
-        zoomSlider.setValue(0);
-        handleZoomMouse();
-    }
+    @FXML private void handleNew() {}
     
-    @FXML private void handleOpen() {
-        File file = fileChooser.showOpenDialog(primaryStage);
-        if (file != null) {
-            try {
-                Drawing drawing = (Drawing) um.unmarshal(file);
-                handleNew();
-                drawing.load(canvas);
-                List<TreeItem<Node>> layItems = nodeTree.getRoot().getChildren();
-                canvas.getChildrenUnmodifiable().forEach((lay) -> {
-                    Parent layer = (Parent) lay;
-                    layer.idProperty().addListener(idListener);
-                    TreeItem<Node> layItem = new TreeItem<>(layer);
-                    layItems.add(layItem);
-                    List<TreeItem<Node>> shpItems = layItem.getChildren();
-                    layer.getChildrenUnmodifiable().forEach((shape) -> {
-                        shape.idProperty().addListener(idListener);
-                        shape.setOnMouseClicked(shapeHandler);
-                        shpItems.add(new TreeItem<>(shape));
-                    });
-                });
-            } catch (Exception ex) {
-                ExceptionDialog dialog = new ExceptionDialog(ex);
-                dialog.showAndWait();
-            }
-        }
-    }
+    @FXML private void handleOpen() {}
     
     @FXML private void handleQuit() {
         primaryStage.close();
     }
     
-    @FXML private void handleSave() {
-        File file = fileChooser.showSaveDialog(primaryStage);
-        if (file != null) {
-            String path = file.getPath();
-            if (!path.endsWith(".xml")) {
-                file = new File(path + ".xml");
-            }
-            Drawing drawing = new Drawing(canvas);
-            try {
-                m.marshal(drawing, file);
-            } catch (Exception ex) {
-                ExceptionDialog dialog = new ExceptionDialog(ex);
-                dialog.showAndWait();
-            }
-        }
-    }
+    @FXML private void handleSave() {}
     
     @FXML private void handleZoomKey(KeyEvent event) {
         KeyCode key = event.getCode();
@@ -324,16 +203,6 @@ public class PrimaryScene implements Initializable {
         canvas.setScaleY(zoom);
         canvasScroll.setHvalue(h);
         canvasScroll.setVvalue(v);
-    }
-    
-    private TreeItem<Node> addLayer() {
-        Group layer = new Group();
-        layer.setId("layer");
-        layer.idProperty().addListener(idListener);
-        canvas.getChildren().add(layer);
-        TreeItem<Node> layItem = new TreeItem<>(layer);
-        nodeTree.getRoot().getChildren().add(layItem);
-        return layItem;
     }
     
     /**
