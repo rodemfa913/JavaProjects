@@ -17,6 +17,7 @@ public class Layer {
     @XmlAttribute private final String id;
     @XmlElementWrapper @XmlElements({
         @XmlElement(name = "circle", type = BCircle.class),
+        @XmlElement(name = "ellipse", type = BEllipse.class),
         @XmlElement(name = "rectangle", type = BRectangle.class)
     })
     private final List<BShape> shapes;
@@ -43,6 +44,8 @@ public class Layer {
         layer.getChildren().forEach((shape) -> {
             if (shape instanceof Circle) {
                 shapes.add(new BCircle((Circle) shape));
+            } else if (shape instanceof Ellipse) {
+                shapes.add(new BEllipse((Ellipse) shape));
             } else {
                 shapes.add(new BRectangle((Rectangle) shape));
             }

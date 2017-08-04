@@ -49,19 +49,18 @@ public class PrimaryScene implements Initializable {
     }
     
     private class ShapeHandler implements EventHandler<MouseEvent> {
-        @Override
-        public void handle(MouseEvent event) {
+        @Override public void handle(MouseEvent event) {
             Node selected = (Node) event.getSource();
             Group layer = (Group) selected.getParent();
             int i = canvas.getChildren().indexOf(layer);
             int j = layer.getChildren().indexOf(selected);
             TreeItem<Node> layItem = nodeTree.getRoot().getChildren().get(i);
-            TreeItem<Node> item = layItem.getChildren().get(j);
-            nodeTree.getSelectionModel().select(item);
+            TreeItem<Node> shpItem = layItem.getChildren().get(j);
+            nodeTree.getSelectionModel().select(shpItem);
         }
     }
     
-    private class TreeSelectionListener implements ChangeListener<TreeItem<Node>> {
+    private class TreeListener implements ChangeListener<TreeItem<Node>> {
         @Override public void changed(
                 ObservableValue<? extends TreeItem<Node>> observable,
                 TreeItem<Node> oldValue,
@@ -83,7 +82,7 @@ public class PrimaryScene implements Initializable {
     @Override public void initialize(URL url, ResourceBundle rb) {
         nodeTree.setCellFactory(new TreeCellFactory());
         MultipleSelectionModel<TreeItem<Node>> selector = nodeTree.getSelectionModel();
-        selector.selectedItemProperty().addListener(new TreeSelectionListener());
+        selector.selectedItemProperty().addListener(new TreeListener());
         idListener = new IdListener();
         canvas.idProperty().addListener(idListener);
         canvas.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
