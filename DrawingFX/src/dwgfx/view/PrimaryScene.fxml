@@ -87,7 +87,7 @@
         </HBox>
     </top>
     <left>
-        <TreeView fx:id="idTree" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <TreeView fx:id="nodeTree" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <BorderPane.margin>
                 <Insets right="5.0" />
             </BorderPane.margin>
@@ -98,7 +98,7 @@
             <content>
                 <Group>
                     <children>
-                        <AnchorPane fx:id="canvas" id="drawing" minHeight="400.0" minWidth="400.0" />
+                        <AnchorPane fx:id="canvas" />
                     </children>
                 </Group>
             </content>

@@ -2,7 +2,7 @@ package dwgfx.view;
 
 import dialogs.ExceptionDialog;
 import dwgfx.bind.Drawing;
-import dwgfx.util.TreeItemUtil;
+import dwgfx.util.TreeCellFactory;
 import java.net.URL;
 import java.util.*;
 import javafx.beans.value.*;
@@ -21,7 +21,7 @@ import javafx.stage.*;
 import javax.xml.bind.*;
 
 /**
- * ...
+ * Controller class of the primary user interface.
  * @author rodemfa
  */
 public class PrimaryScene implements Initializable {
@@ -29,45 +29,33 @@ public class PrimaryScene implements Initializable {
     @FXML private ComboBox<String> typeCombo;
     @FXML private ScrollPane canvasScroll;
     @FXML private Slider zoomSlider;
-    @FXML private TreeView<String> idTree;
+    @FXML private TreeView<Node> nodeTree;
     private FileChooser fileChooser;
     private InnerShadow effect;
-    private Marshaller m;
-    private Node selection;
     private Stage primaryStage;
-    private TreeItem<String> selItem;
+    private Marshaller m;
     private Unmarshaller um;
     
-    private class TreeListener implements ChangeListener<TreeItem<String>> {
+    private class TreeListener implements ChangeListener<TreeItem<Node>> {
         @Override public void changed(
-                ObservableValue<? extends TreeItem<String>> observable,
-                TreeItem<String> oldValue,
-                TreeItem<String> newValue) {
-            List<Integer> path;
-            if (oldValue != null) {
-                selection.setEffect(null);
+                ObservableValue<? extends TreeItem<Node>> observable,
+                TreeItem<Node> oldValue,
+                TreeItem<Node> newValue) {
+            if (oldValue != null && oldValue.getParent() != null) {
+                oldValue.getValue().setEffect(null);
             }
-            if (newValue != null) {
-                selItem = newValue;
-                path = TreeItemUtil.getTreePath(selItem);
-                selection = canvas;
-                path.forEach((index) -> {
-                    selection = ((Parent) selection).getChildrenUnmodifiable().get(index);
-                });
-                if (selection != canvas) {
-                    selection.setEffect(effect);
-                }
+            if (newValue != null && newValue.getParent() != null) {
+                newValue.getValue().setEffect(effect);
             }
         }
     }
     
     @Override public void initialize(URL url, ResourceBundle rb) {
+        nodeTree.setCellFactory(new TreeCellFactory());
         effect = new InnerShadow();
-        MultipleSelectionModel<TreeItem<String>> selector = idTree.getSelectionModel();
+        MultipleSelectionModel<TreeItem<Node>> selector = nodeTree.getSelectionModel();
         selector.selectedItemProperty().addListener(new TreeListener());
-        canvas.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
-        idTree.setRoot(new TreeItem<>(canvas.getId()));
-        selector.select(0);
+        handleNew();
         fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml"));
         try {
@@ -83,20 +71,18 @@ public class PrimaryScene implements Initializable {
     
     @FXML private void handleAdd() {
         String type = typeCombo.getValue();
-        if (type == null || selection instanceof AnchorPane) {
+        if (type == null) {
             type = "Layer";
         }
         if (type.equals("Layer")) {
-            Group layer = new Group();
-            layer.setId("layer");
-            canvas.getChildren().add(layer);
-            idTree.getRoot().getChildren().add(new TreeItem<>(layer.getId()));
+            addLayer();
         } else {
-            Node layer = selection;
-            TreeItem<String> layItem = selItem;
-            if (selection instanceof Shape) {
-                layer = layer.getParent();
+            TreeItem<Node> layItem = nodeTree.getSelectionModel().getSelectedItem();
+            Node node = layItem.getValue();
+            if (node instanceof Shape) {
                 layItem = layItem.getParent();
+            } else if (!(node instanceof Group)) {
+                layItem = addLayer();
             }
             Shape shape;
             switch (type) {
@@ -130,28 +116,14 @@ public class PrimaryScene implements Initializable {
             shape.setLayoutX(100.0);
             shape.setLayoutY(100.0);
             shape.getTransforms().add(new Affine());
-            ((Group) layer).getChildren().add(shape);
-            layItem.getChildren().add(new TreeItem<>(shape.getId()));
+            Group layer = (Group) layItem.getValue();
+            layer.getChildren().add(shape);
+            layItem.getChildren().add(new TreeItem<>(shape));
         }
     }
     
     @FXML private void handleDelete() {
-        TreeItem<String> item = selItem;
-        TreeItem<String> itParent = item.getParent();
-        if (itParent != null) {
-            List<TreeItem<String>> itChildren = itParent.getChildren();
-            Node node = selection;
-            Parent parent = node.getParent();
-            List<Node> children;
-            if (parent instanceof Group) {
-                children = ((Group) parent).getChildren();
-            } else {
-                children = ((AnchorPane) parent).getChildren();
-            }
-            idTree.getSelectionModel().select(0);
-            children.remove(node);
-            itChildren.remove(item);
-        }
+        move(0);
     }
     
     @FXML private void handleEdit() {
@@ -165,20 +137,37 @@ public class PrimaryScene implements Initializable {
             propsStage.initModality(Modality.WINDOW_MODAL);
             propsStage.initOwner(primaryStage);
             NodeProps controller = loader.getController();
-            controller.setItem(selection);
+            TreeItem<Node> item = nodeTree.getSelectionModel().getSelectedItem();
+            Node node = item.getValue();
+            controller.setItem(node);
             propsStage.showAndWait();
-            selItem.setValue(selection.getId());
+            item.setValue(null);
+            item.setValue(node);
         } catch (Exception ex) {
             ExceptionDialog dialog = new ExceptionDialog(ex);
             dialog.showAndWait();
         }
     }
     
-    @FXML private void handleMoveBack() {}
+    @FXML private void handleMoveBack() {
+        move(-1);
+    }
     
-    @FXML private void handleMoveForward() {}
+    @FXML private void handleMoveForward() {
+        move(1);
+    }
     
-    @FXML private void handleNew() {}
+    @FXML private void handleNew() {
+        nodeTree.setRoot(new TreeItem<>(canvas));
+        nodeTree.getSelectionModel().select(0);
+        canvas.getChildren().clear();
+        canvas.setId("drawing");
+        canvas.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
+        canvas.setMinWidth(400.0);
+        canvas.setMinHeight(400.0);
+        zoomSlider.setValue(0);
+        handleZoomMouse();
+    }
     
     @FXML private void handleOpen() {}
     
@@ -203,6 +192,46 @@ public class PrimaryScene implements Initializable {
         canvas.setScaleY(zoom);
         canvasScroll.setHvalue(h);
         canvasScroll.setVvalue(v);
+    }
+    
+    private TreeItem<Node> addLayer() {
+        Group layer = new Group();
+        layer.setId("layer");
+        canvas.getChildren().add(layer);
+        TreeItem<Node> layItem = new TreeItem<>(layer);
+        nodeTree.getRoot().getChildren().add(layItem);
+        return layItem;
+    }
+    
+    private void move(int direction) {
+        MultipleSelectionModel<TreeItem<Node>> selector = nodeTree.getSelectionModel();
+        TreeItem<Node> item = selector.getSelectedItem();
+        TreeItem<Node> itParent = item.getParent();
+        if (itParent != null) {
+            List<TreeItem<Node>> itChildren = itParent.getChildren();
+            Node node = item.getValue();
+            Parent parent = node.getParent();
+            List<Node> children;
+            if (parent instanceof Group) {
+                children = ((Group) parent).getChildren();
+            } else {
+                children = ((AnchorPane) parent).getChildren();
+            }
+            selector.select(0);
+            int index = itChildren.indexOf(item);
+            itChildren.remove(item);
+            children.remove(node);
+            if (direction != 0) {
+                if (direction < 0 && index > 0) {
+                    --index;
+                } else if (direction > 0 && index < itChildren.size()) {
+                    ++index;
+                }
+                itChildren.add(index, item);
+                children.add(index, node);
+                selector.select(item);
+            }
+        }
     }
     
     /**
