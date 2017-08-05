@@ -1,6 +1,8 @@
 package dwgfx.bind;
 
-import javafx.scene.shape.*;
+import javafx.scene.Node;
+import javafx.scene.control.TreeItem;
+import javafx.scene.shape.Rectangle;
 import javax.xml.bind.annotation.XmlAttribute;
 
 /**
@@ -35,11 +37,11 @@ public class BRectangle extends BShape {
         arcHeight = rect.getArcHeight();
     }
     
-    @Override public Shape get() {
+    @Override public TreeItem<Node> get() {
         Rectangle rect = new Rectangle(width, height);
         rect.setArcWidth(arcWidth);
         rect.setArcHeight(arcHeight);
         load(rect);
-        return rect;
+        return new TreeItem<>(rect);
     }
 }

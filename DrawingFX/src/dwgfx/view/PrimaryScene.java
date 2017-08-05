@@ -3,6 +3,7 @@ package dwgfx.view;
 import dialogs.ExceptionDialog;
 import dwgfx.bind.Drawing;
 import dwgfx.util.TreeCellFactory;
+import java.io.File;
 import java.net.URL;
 import java.util.*;
 import javafx.beans.value.*;
@@ -169,13 +170,40 @@ public class PrimaryScene implements Initializable {
         handleZoomMouse();
     }
     
-    @FXML private void handleOpen() {}
+    @FXML private void handleOpen() {
+        File file = fileChooser.showOpenDialog(primaryStage);
+        if (file != null) {
+            try {
+                Drawing drawing = (Drawing) um.unmarshal(file);
+                handleNew();
+                drawing.load(nodeTree.getRoot());
+            } catch (Exception ex) {
+                ExceptionDialog dialog = new ExceptionDialog(ex);
+                dialog.showAndWait();
+            }
+        }
+    }
     
     @FXML private void handleQuit() {
         primaryStage.close();
     }
     
-    @FXML private void handleSave() {}
+    @FXML private void handleSave() {
+        File file = fileChooser.showSaveDialog(primaryStage);
+        if (file != null) {
+            String filePath = file.getPath();
+            if (!filePath.endsWith(".xml")) {
+                file = new File(filePath + ".xml");
+            }
+            Drawing drawing = new Drawing(canvas);
+            try {
+                m.marshal(drawing, file);
+            } catch (Exception ex) {
+                ExceptionDialog dialog = new ExceptionDialog(ex);
+                dialog.showAndWait();
+            }
+        }
+    }
     
     @FXML private void handleZoomKey(KeyEvent event) {
         KeyCode key = event.getCode();

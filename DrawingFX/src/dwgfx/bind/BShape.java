@@ -1,5 +1,7 @@
 package dwgfx.bind;
 
+import javafx.scene.Node;
+import javafx.scene.control.TreeItem;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 import javafx.scene.transform.Affine;
@@ -47,7 +49,7 @@ public abstract class BShape {
     }
     
     /**
-     * Loads a Shape with properties of BShape.
+     * Sets the properties of BShape into specified Shape.
      * This method is called by subclasses that implements the {@link #get() get} method.
      * @param shape a Shape.
      */
@@ -64,8 +66,8 @@ public abstract class BShape {
     }
     
     /**
-     * Gets a new Shape with properties of BShape.
-     * @return a new Shape.
+     * Gets a TreeItem containing a new Shape with properties of BShape.
+     * @return a TreeItem containing a new Shape.
      */
-    public abstract Shape get();
+    public abstract TreeItem<Node> get();
 }

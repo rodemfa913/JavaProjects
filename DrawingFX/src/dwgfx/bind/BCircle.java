@@ -1,6 +1,8 @@
 package dwgfx.bind;
 
-import javafx.scene.shape.*;
+import javafx.scene.Node;
+import javafx.scene.control.TreeItem;
+import javafx.scene.shape.Circle;
 import javax.xml.bind.annotation.XmlAttribute;
 
 /**
@@ -27,9 +29,9 @@ public class BCircle extends BShape {
         radius = circle.getRadius();
     }
     
-    @Override public Shape get() {
+    @Override public TreeItem<Node> get() {
         Circle circle = new Circle(radius);
         load(circle);
-        return circle;
+        return new TreeItem<>(circle);
     }
 }

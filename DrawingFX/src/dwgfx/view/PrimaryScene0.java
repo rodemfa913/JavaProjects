@@ -267,7 +267,7 @@ public class PrimaryScene0 implements Initializable {
             try {
                 Drawing drawing = (Drawing) um.unmarshal(file);
                 handleNew();
-                drawing.load(canvas);
+                //drawing.load(canvas);
                 List<TreeItem<Node>> layItems = nodeTree.getRoot().getChildren();
                 canvas.getChildrenUnmodifiable().forEach((lay) -> {
                     Parent layer = (Parent) lay;

@@ -1,6 +1,8 @@
 package dwgfx.bind;
 
-import javafx.scene.shape.*;
+import javafx.scene.Node;
+import javafx.scene.control.TreeItem;
+import javafx.scene.shape.Ellipse;
 import javax.xml.bind.annotation.XmlAttribute;
 
 /**
@@ -30,9 +32,9 @@ public class BEllipse extends BShape {
         ry = ellipse.getRadiusY();
     }
 
-    @Override public Shape get() {
+    @Override public TreeItem<Node> get() {
         Ellipse ellipse = new Ellipse(rx, ry);
         load(ellipse);
-        return ellipse;
+        return new TreeItem<>(ellipse);
     }
 }

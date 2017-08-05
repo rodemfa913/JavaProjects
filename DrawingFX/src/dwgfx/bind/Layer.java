@@ -2,6 +2,7 @@ package dwgfx.bind;
 
 import java.util.*;
 import javafx.scene.*;
+import javafx.scene.control.TreeItem;
 import javafx.scene.shape.*;
 import javax.xml.bind.annotation.*;
 
@@ -53,18 +54,22 @@ public class Layer {
     }
     
     /**
-     * Gets a new layer with properties of Layer.
-     * @return a new layer.
+     * Gets a TreeItem containing a new layer with properties of Layer.
+     * @return a TreeItem whose value is a new layer.
      */
-    public Group get() {
+    public TreeItem<Node> get() {
         Group layer = new Group();
         layer.setId(id);
         layer.setOpacity(opacity);
         layer.setVisible(visible);
-        List<Node> children = layer.getChildren();
+        List<Node> shpNodes = layer.getChildren();
+        TreeItem<Node> layItem = new TreeItem<>(layer);
+        List<TreeItem<Node>> shpItems = layItem.getChildren();
         shapes.forEach((shape) -> {
-            children.add(shape.get());
+            TreeItem<Node> shpItem = shape.get();
+            shpItems.add(shpItem);
+            shpNodes.add(shpItem.getValue());
         });
-        return layer;
+        return layItem;
     }
 }
