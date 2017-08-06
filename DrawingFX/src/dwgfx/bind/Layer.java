@@ -21,6 +21,7 @@ public class Layer {
         @XmlElement(name = "arc", type = BArc.class),
         @XmlElement(name = "circle", type = BCircle.class),
         @XmlElement(name = "ellipse", type = BEllipse.class),
+        @XmlElement(name = "path", type = BPath.class),
         @XmlElement(name = "rectangle", type = BRectangle.class),
         @XmlElement(name = "text", type = BText.class)
     })
@@ -52,6 +53,8 @@ public class Layer {
                 shapes.add(new BCircle((Circle) shape));
             } else if (shape instanceof Ellipse) {
                 shapes.add(new BEllipse((Ellipse) shape));
+            } else if (shape instanceof Path) {
+                shapes.add(new BPath((Path) shape));
             } else if (shape instanceof Text) {
                 shapes.add(new BText((Text) shape));
             } else {
