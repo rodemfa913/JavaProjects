@@ -4,6 +4,7 @@ import java.util.*;
 import javafx.scene.*;
 import javafx.scene.control.TreeItem;
 import javafx.scene.shape.*;
+import javafx.scene.text.Text;
 import javax.xml.bind.annotation.*;
 
 /**
@@ -17,9 +18,11 @@ public class Layer {
     @XmlAttribute private final double opacity;
     @XmlAttribute private final String id;
     @XmlElementWrapper @XmlElements({
+        @XmlElement(name = "arc", type = BArc.class),
         @XmlElement(name = "circle", type = BCircle.class),
         @XmlElement(name = "ellipse", type = BEllipse.class),
-        @XmlElement(name = "rectangle", type = BRectangle.class)
+        @XmlElement(name = "rectangle", type = BRectangle.class),
+        @XmlElement(name = "text", type = BText.class)
     })
     private final List<BShape> shapes;
     
@@ -43,10 +46,14 @@ public class Layer {
         visible = layer.isVisible();
         shapes = new ArrayList<>();
         layer.getChildren().forEach((shape) -> {
-            if (shape instanceof Circle) {
+            if (shape instanceof Arc) {
+                shapes.add(new BArc((Arc) shape));
+            } else if (shape instanceof Circle) {
                 shapes.add(new BCircle((Circle) shape));
             } else if (shape instanceof Ellipse) {
                 shapes.add(new BEllipse((Ellipse) shape));
+            } else if (shape instanceof Text) {
+                shapes.add(new BText((Text) shape));
             } else {
                 shapes.add(new BRectangle((Rectangle) shape));
             }

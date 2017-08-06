@@ -25,11 +25,11 @@ public class BColor {
     
     /**
      * Creates an instance of BColor with properties of specified Color.
-     * @param color a Color; if null, the value Color.BLACK is used.
+     * @param color a Color; if null, the value Color.TRANSPARENT is used.
      */
     public BColor(Color color) {
         if (color == null) {
-            color = Color.BLACK;
+            color = Color.TRANSPARENT;
         }
         red = color.getRed();
         green = color.getGreen();
