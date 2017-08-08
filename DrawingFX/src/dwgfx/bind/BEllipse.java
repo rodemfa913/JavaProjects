@@ -6,7 +6,7 @@ import javafx.scene.shape.Ellipse;
 import javax.xml.bind.annotation.XmlAttribute;
 
 /**
- * ...
+ * Binding class for an Ellipse.
  * @author rodemfa
  */
 public class BEllipse extends BShape {
@@ -14,7 +14,7 @@ public class BEllipse extends BShape {
     @XmlAttribute private final double ry;
     
     /**
-     * ...
+     * Creates a default instance of BEllipse.
      */
     public BEllipse() {
         super();
@@ -23,8 +23,8 @@ public class BEllipse extends BShape {
     }
     
     /**
-     * ...
-     * @param ellipse ...
+     * Creates an instance of BEllipse with properties of specified Ellipse.
+     * @param ellipse an {@link Ellipse}.
      */
     public BEllipse(Ellipse ellipse) {
         super(ellipse);

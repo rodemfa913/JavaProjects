@@ -11,7 +11,7 @@ import javafx.scene.Node;
 public interface Properties {
     /**
      * Applies the changes on item.
-     * @throws Exception can or cannot throw an Exception;
+     * @throws Exception can or cannot throw an {@link Exception};
      * see the class implementations for details.
      */
     public void handleApply() throws Exception;

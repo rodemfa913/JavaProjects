@@ -6,7 +6,7 @@ import javafx.scene.shape.Arc;
 import javax.xml.bind.annotation.XmlAttribute;
 
 /**
- * ...
+ * Binding class for an Arc.
  * @author Rodemfa913
  */
 public class BArc extends BShape {
@@ -16,7 +16,7 @@ public class BArc extends BShape {
     @XmlAttribute private final double start;
     
     /**
-     * ...
+     * Creates a default instance of BArc.
      */
     public BArc() {
         super();
@@ -27,8 +27,8 @@ public class BArc extends BShape {
     }
     
     /**
-     * ...
-     * @param arc ...
+     * Creates an insiance of BArc with properties of specified Arc.
+     * @param arc an Arc.
      */
     public BArc(Arc arc) {
         super(arc);

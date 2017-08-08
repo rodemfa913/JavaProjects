@@ -5,7 +5,7 @@ import javafx.scene.control.TreeCell;
 import javafx.scene.shape.Shape;
 
 /**
- * A subclass of TreeCell.
+ * A subclass of {@link TreeCell}.
  * @author rodemfa
  */
 public class NodeTreeCell extends TreeCell<Node> {

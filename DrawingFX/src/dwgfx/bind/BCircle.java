@@ -6,14 +6,14 @@ import javafx.scene.shape.Circle;
 import javax.xml.bind.annotation.XmlAttribute;
 
 /**
- * ...
+ * Binding class for a Circle.
  * @author Rodemfa913
  */
 public class BCircle extends BShape {
     @XmlAttribute private final double radius;
     
     /**
-     * ...
+     * Creates a default instance of BCircle.
      */
     public BCircle() {
         super();
@@ -21,8 +21,8 @@ public class BCircle extends BShape {
     }
     
     /**
-     * ...
-     * @param circle ...
+     * Creates an instance of BCircle with properties of specified Circle.
+     * @param circle a Circle.
      */
     public BCircle(Circle circle) {
         super(circle);

@@ -5,7 +5,7 @@ import javafx.scene.control.*;
 import javafx.util.Callback;
 
 /**
- * A cell factory class.
+ * Factory class for a {@link TreeCell}.
  * @author rodemfa
  */
 public class TreeCellFactory implements Callback<TreeView<Node>, TreeCell<Node>> {
