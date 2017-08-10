@@ -3,15 +3,15 @@ package dwgfx.util;
 import javafx.scene.transform.Affine;
 
 /**
- * Helper class for convert {@link Affine} transform to {@link String} and vice-versa.
+ * Helper class for convert Affine transform to String and vice-versa.
  * @author Rodemfa913
  */
 public abstract class TransUtil {
     /**
-     * Converts a formatted {@link String} to an {@link Affine} transform.
-     * @param trans the formatted {@link String}.
-     * @return the {@link Affine} transform.
-     * @throws Exception if the {@link String} could not be converted.
+     * Converts a formatted String to an Affine transform.
+     * @param trans the formatted String.
+     * @return the Affine transform.
+     * @throws Exception if the String could not be converted.
      */
     public static Affine parseTransform(String trans) throws Exception {
         Affine transform = new Affine();
@@ -56,9 +56,9 @@ public abstract class TransUtil {
     }
     
     /**
-     * Converts an {@link Affine} transform to a formatted {@link String}.
-     * @param transform the {@link Affine} transform.
-     * @return the formatted {@link String}.
+     * Converts an Affine transform to a formatted String.
+     * @param transform the Affine transform.
+     * @return the formatted String.
      */
     public static String toString(Affine transform) {
         return "matrix " +

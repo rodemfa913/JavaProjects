@@ -5,13 +5,13 @@ import javafx.scene.control.TreeCell;
 import javafx.scene.shape.Shape;
 
 /**
- * A subclass of {@link TreeCell}.
+ * A subclass of TreeCell&lt;Node&gt;.
  * @author rodemfa
  */
 public class NodeTreeCell extends TreeCell<Node> {
     @Override public void updateItem(Node item, boolean empty) {
         super.updateItem(item, empty);
-        if (empty) {
+        if (empty || item == null) {
             setText(null);
         } else {
             String text = item.getId();

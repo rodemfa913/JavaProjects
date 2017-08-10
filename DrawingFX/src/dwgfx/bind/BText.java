@@ -6,7 +6,7 @@ import javafx.scene.text.*;
 import javax.xml.bind.annotation.*;
 
 /**
- * ...
+ * Binding class for a Text.
  * @author Rodemfa913
  */
 public class BText extends BShape {
@@ -16,7 +16,7 @@ public class BText extends BShape {
     @XmlElement private final String body;
     
     /**
-     * ...
+     * Creates a default instance of BText.
      */
     public BText() {
         super();
@@ -27,8 +27,8 @@ public class BText extends BShape {
     }
     
     /**
-     * ...
-     * @param text ...
+     * Creates an instance of BText with properties of specified Text.
+     * @param text a Text.
      */
     public BText(Text text) {
         super(text);

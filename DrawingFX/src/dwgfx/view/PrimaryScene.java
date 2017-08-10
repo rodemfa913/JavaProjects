@@ -263,9 +263,9 @@ public class PrimaryScene implements Initializable {
     }
     
     /**
-     * Sets a reference to the primary {@link Stage}.
-     * This method is called by the main {@link javafx.application.Application}.
-     * @param stage the primary {@link Stage}.
+     * Sets a reference to the primary Stage.
+     * This method is called by the main Application.
+     * @param stage the primary Stage.
      */
     public void setStage(Stage stage) {
         primaryStage = stage;

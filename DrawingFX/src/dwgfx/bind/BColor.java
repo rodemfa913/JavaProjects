@@ -16,7 +16,7 @@ public class BColor {
     
     /**
      * Creates a default instance of BColor.
-     * Equivalent to call {@link #BColor(javafx.scene.paint.Color) BColor(Color)}
+     * Equivalent to call {@link #BColor(Color) BColor(Color)}
      * with null as parameter.
      */
     public BColor() {

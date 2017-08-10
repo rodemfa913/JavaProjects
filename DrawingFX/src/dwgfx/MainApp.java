@@ -9,7 +9,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 /**
- * The main {@link Application} class.
+ * The main Application class.
  * @author rodemfa
  */
 public class MainApp extends Application {

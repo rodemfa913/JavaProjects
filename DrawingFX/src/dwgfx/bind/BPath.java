@@ -7,7 +7,7 @@ import javafx.scene.shape.*;
 import javax.xml.bind.annotation.*;
 
 /**
- * ...
+ * Binding class for a Path.
  * @author Rodemfa913
  */
 public class BPath extends BShape {
@@ -21,7 +21,7 @@ public class BPath extends BShape {
     private final List<BClose> elements;
     
     /**
-     * ...
+     * Creates a default instance of BPath.
      */
     public BPath() {
         super();
@@ -29,8 +29,8 @@ public class BPath extends BShape {
     }
     
     /**
-     * ...
-     * @param path ...
+     * Creates an instance of BPath with properties of specified Path.
+     * @param path a Path.
      */
     public BPath(Path path) {
         super(path);
