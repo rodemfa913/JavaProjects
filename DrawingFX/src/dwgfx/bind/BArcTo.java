@@ -1,13 +1,14 @@
 package dwgfx.bind;
 
 import javafx.scene.shape.*;
-import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.*;
 
 /**
- * ...
+ * Binding class for an ArcTo element of Path.
  * @author Rodemfa913
  */
-public class BArcTo extends BClose {
+@XmlAccessorType(XmlAccessType.FIELD)
+public class BArcTo implements BElement {
     @XmlAttribute private final boolean large;
     @XmlAttribute private final boolean sweep;
     @XmlAttribute private final double rx;
@@ -17,7 +18,7 @@ public class BArcTo extends BClose {
     @XmlAttribute private final double y;
     
     /**
-     * ...
+     * Creates a default instance of BArcTo.
      */
     public BArcTo() {
         rx = ry = xRot = x = y = 0.0;
@@ -25,8 +26,8 @@ public class BArcTo extends BClose {
     }
     
     /**
-     * ...
-     * @param arcto ...
+     * Creates an instance of BArcTo with properties of specified ArcTo.
+     * @param arcto an ArcTo element of Path.
      */
     public BArcTo(ArcTo arcto) {
         rx = arcto.getRadiusX();

@@ -1,13 +1,14 @@
 package dwgfx.bind;
 
 import javafx.scene.shape.*;
-import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.*;
 
 /**
- * ...
+ * Binding class for a CubicCurveTo element of Path.
  * @author Rodemfa913
  */
-public class BCurveTo extends BClose {
+@XmlAccessorType(XmlAccessType.FIELD)
+public class BCurveTo implements BElement {
     @XmlAttribute private final double x;
     @XmlAttribute private final double x1;
     @XmlAttribute private final double x2;
@@ -16,15 +17,15 @@ public class BCurveTo extends BClose {
     @XmlAttribute private final double y2;
     
     /**
-     * ...
+     * Creates a default instance of BCurveTo.
      */
     public BCurveTo() {
         x1 = y1 = x2 = y2 = x = y = 0.0;
     }
     
     /**
-     * ...
-     * @param curveto ...
+     * Creates an instance of BCurveTo with properties of specified CubicCurveTo.
+     * @param curveto a CubicCurveTo element of Path.
      */
     public BCurveTo(CubicCurveTo curveto) {
         x1 = curveto.getControlX1();

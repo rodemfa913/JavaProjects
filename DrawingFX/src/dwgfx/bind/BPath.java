@@ -18,7 +18,7 @@ public class BPath extends BShape {
         @XmlElement(name = "lineto", type = BLineTo.class),
         @XmlElement(name = "moveto", type = BMoveTo.class)
     })
-    private final List<BClose> elements;
+    private final List<BElement> elements;
     
     /**
      * Creates a default instance of BPath.

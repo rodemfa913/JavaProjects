@@ -1,26 +1,27 @@
 package dwgfx.bind;
 
 import javafx.scene.shape.*;
-import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.*;
 
 /**
- * ...
+ * Binding class for a LineTo element of Path.
  * @author Rodemfa913
  */
-public class BLineTo extends BClose {
+@XmlAccessorType(XmlAccessType.FIELD)
+public class BLineTo implements BElement {
     @XmlAttribute private final double x;
     @XmlAttribute private final double y;
     
     /**
-     * ...
+     * Creates a default instance of BLineTo.
      */
     public BLineTo() {
         x = y = 0.0;
     }
     
     /**
-     * ...
-     * @param lineto ...
+     * Creates an instance of BLineTo with properties of specified LineTo.
+     * @param lineto a LineTo element of Path.
      */
     public BLineTo(LineTo lineto) {
         x = lineto.getX();
