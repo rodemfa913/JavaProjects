@@ -9,12 +9,7 @@ import javax.xml.bind.annotation.*;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 public class BAffine {
-    @XmlAttribute private final double mxx;
-    @XmlAttribute private final double mxy;
-    @XmlAttribute private final double myx;
-    @XmlAttribute private final double myy;
-    @XmlAttribute private final double tx;
-    @XmlAttribute private final double ty;
+    @XmlAttribute private final double mxx, mxy, myx, myy, tx, ty;
     
     /**
      * Creates a default instance of BAffine.

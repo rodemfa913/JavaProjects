@@ -25,7 +25,7 @@ public class BPath extends BShape {
      */
     public BPath() {
         super();
-        elements = new ArrayList<>();
+        elements = new ArrayList();
     }
     
     /**
@@ -34,7 +34,7 @@ public class BPath extends BShape {
      */
     public BPath(Path path) {
         super(path);
-        elements = new ArrayList<>();
+        elements = new ArrayList();
         path.getElements().forEach((element) -> {
             if (element instanceof ArcTo) {
                 elements.add(new BArcTo((ArcTo) element));
@@ -57,6 +57,6 @@ public class BPath extends BShape {
             elems.add(element.get());
         });
         load(path);
-        return new TreeItem<>(path);
+        return new TreeItem(path);
     }
 }

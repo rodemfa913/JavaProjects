@@ -9,8 +9,7 @@ import javax.xml.bind.annotation.*;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 public class BLineTo implements BElement {
-    @XmlAttribute private final double x;
-    @XmlAttribute private final double y;
+    @XmlAttribute private final double x, y;
     
     /**
      * Creates a default instance of BLineTo.

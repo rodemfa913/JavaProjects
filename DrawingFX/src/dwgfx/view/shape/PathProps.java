@@ -14,8 +14,7 @@ import javafx.scene.shape.Path;
  * @author rodemfa
  */
 public class PathProps implements Properties {
-    @FXML private Spinner<Double> xSpin;
-    @FXML private Spinner<Double> ySpin;
+    @FXML private Spinner<Double> xSpin, ySpin;
     @FXML private TextArea dataText;
     private Path path;
 

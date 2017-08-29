@@ -12,6 +12,7 @@
     <rowConstraints>
         <RowConstraints />
         <RowConstraints />
+        <RowConstraints />
     </rowConstraints>
     <children>
         <Label text="Size:" />
@@ -27,5 +28,7 @@
         </Spinner>
         <Label text="Background:" GridPane.rowIndex="1" />
         <ColorPicker fx:id="bgColorPicker" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+        <Label text="Stylesheet:" GridPane.rowIndex="2" />
+        <Button fx:id="styleButton" text="Choose..." GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" onAction="#handleStyle" />
     </children>
 </GridPane>

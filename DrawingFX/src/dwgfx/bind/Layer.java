@@ -34,7 +34,7 @@ public class Layer {
         id = "layer";
         opacity = 1.0;
         visible = true;
-        shapes = new ArrayList<>();
+        shapes = new ArrayList();
     }
     
     /**
@@ -45,7 +45,7 @@ public class Layer {
         id = layer.getId();
         opacity = layer.getOpacity();
         visible = layer.isVisible();
-        shapes = new ArrayList<>();
+        shapes = new ArrayList();
         layer.getChildren().forEach((shape) -> {
             if (shape instanceof Arc) {
                 shapes.add(new BArc((Arc) shape));
@@ -73,7 +73,7 @@ public class Layer {
         layer.setOpacity(opacity);
         layer.setVisible(visible);
         List<Node> shpNodes = layer.getChildren();
-        TreeItem<Node> layItem = new TreeItem<>(layer);
+        TreeItem<Node> layItem = new TreeItem(layer);
         List<TreeItem<Node>> shpItems = layItem.getChildren();
         shapes.forEach((shape) -> {
             TreeItem<Node> shpItem = shape.get();

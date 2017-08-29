@@ -11,8 +11,7 @@ import javax.xml.bind.annotation.*;
  */
 public class BText extends BShape {
     @XmlAttribute private final double fontSize;
-    @XmlAttribute private final String fontFamily;
-    @XmlAttribute private final String fontStyle;
+    @XmlAttribute private final String fontFamily, fontStyle;
     @XmlElement private final String body;
     
     /**
@@ -45,6 +44,6 @@ public class BText extends BShape {
         FontPosture posture = fontStyle.contains("Italic") ? FontPosture.ITALIC : FontPosture.REGULAR;
         text.setFont(Font.font(fontFamily, weight, posture, fontSize));
         load(text);
-        return new TreeItem<>(text);
+        return new TreeItem(text);
     }
 }

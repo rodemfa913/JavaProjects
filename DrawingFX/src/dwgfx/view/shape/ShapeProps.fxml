@@ -22,20 +22,23 @@
                         <RowConstraints />
                         <RowConstraints />
                         <RowConstraints />
+                        <RowConstraints />
                     </rowConstraints>
                     <children>
-                        <Label text="Fill Color:" />
-                        <ColorPicker fx:id="fillColorPicker" GridPane.columnIndex="1" />
-                        <Label text="Stroke Color:" GridPane.rowIndex="1" />
-                        <ColorPicker fx:id="strokeColorPicker" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Label text="Stroke Width:" GridPane.rowIndex="2" />
-                        <Spinner fx:id="strokeWidthSpin" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <Label text="Style Class:" />
+                        <TextField fx:id="classText" GridPane.columnIndex="1" />
+                        <Label text="Fill Color:" GridPane.rowIndex="1" />
+                        <ColorPicker fx:id="fillColorPicker" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="Stroke Color:" GridPane.rowIndex="2" />
+                        <ColorPicker fx:id="strokeColorPicker" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label text="Stroke Width:" GridPane.rowIndex="3" />
+                        <Spinner fx:id="strokeWidthSpin" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
                             <valueFactory>
                                 <SpinnerValueFactory.DoubleSpinnerValueFactory max="5.0" min="0.0" />
                             </valueFactory>
                         </Spinner>
-                        <Label text="Stroke Line Cap:" GridPane.rowIndex="3" />
-                        <ComboBox fx:id="lineCapCombo" promptText="Line Cap" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <Label text="Stroke Line Cap:" GridPane.rowIndex="4" />
+                        <ComboBox fx:id="lineCapCombo" promptText="Line Cap" GridPane.columnIndex="1" GridPane.rowIndex="4">
                             <items>
                                 <FXCollections fx:factory="observableArrayList">
                                     <StrokeLineCap fx:value="BUTT" />
@@ -44,8 +47,8 @@
                                 </FXCollections>
                             </items>
                         </ComboBox>
-                        <Label text="Stroke Line Join:" GridPane.rowIndex="4" />
-                        <ComboBox fx:id="lineJoinCombo" promptText="Line Join" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                        <Label text="Stroke Line Join:" GridPane.rowIndex="5" />
+                        <ComboBox fx:id="lineJoinCombo" promptText="Line Join" GridPane.columnIndex="1" GridPane.rowIndex="5">
                             <items>
                                 <FXCollections fx:factory="observableArrayList">
                                     <StrokeLineJoin fx:value="MITER" />

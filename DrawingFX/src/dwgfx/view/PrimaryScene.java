@@ -13,10 +13,8 @@ import javafx.scene.control.*;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
+import javafx.scene.text.*;
 import javafx.scene.transform.Affine;
 import javafx.stage.*;
 import javax.xml.bind.*;
@@ -159,11 +157,11 @@ public class PrimaryScene implements Initializable {
     }
     
     @FXML private void handleNew() {
-        nodeTree.setRoot(new TreeItem<>(canvas));
+        nodeTree.setRoot(new TreeItem(canvas));
         nodeTree.getSelectionModel().select(0);
         canvas.getChildren().clear();
         canvas.setId("drawing");
-        canvas.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
+        canvas.setBackground(new Background(new BackgroundFill(null, null, null)));
         canvas.setMinWidth(400.0);
         canvas.setMinHeight(400.0);
         zoomSlider.setValue(0);
@@ -226,7 +224,7 @@ public class PrimaryScene implements Initializable {
         Group layer = new Group();
         layer.setId("layer");
         canvas.getChildren().add(layer);
-        TreeItem<Node> layItem = new TreeItem<>(layer);
+        TreeItem<Node> layItem = new TreeItem(layer);
         nodeTree.getRoot().getChildren().add(layItem);
         return layItem;
     }

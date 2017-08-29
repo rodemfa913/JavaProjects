@@ -9,13 +9,8 @@ import javax.xml.bind.annotation.*;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 public class BArcTo implements BElement {
-    @XmlAttribute private final boolean large;
-    @XmlAttribute private final boolean sweep;
-    @XmlAttribute private final double rx;
-    @XmlAttribute private final double ry;
-    @XmlAttribute private final double xRot;
-    @XmlAttribute private final double x;
-    @XmlAttribute private final double y;
+    @XmlAttribute private final boolean large, sweep;
+    @XmlAttribute private final double rx, ry, xRot, x, y;
     
     /**
      * Creates a default instance of BArcTo.

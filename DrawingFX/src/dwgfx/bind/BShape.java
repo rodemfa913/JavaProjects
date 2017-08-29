@@ -14,8 +14,7 @@ import javax.xml.bind.annotation.*;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 public abstract class BShape {
-    @XmlAttribute private final double x;
-    @XmlAttribute private final double y;
+    @XmlAttribute private final double x, y;
     @XmlAttribute private final String id;
     @XmlElement private final BAffine transform;
     @XmlElement private final BColor fill;

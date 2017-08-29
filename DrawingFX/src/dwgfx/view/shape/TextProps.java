@@ -18,12 +18,9 @@ import javafx.scene.text.*;
  * @author rodemfa
  */
 public class TextProps implements Initializable, Properties {
-    @FXML private CheckBox boldCheck;
-    @FXML private CheckBox italicCheck;
+    @FXML private CheckBox boldCheck, italicCheck;
     @FXML private ComboBox<String> familyCombo;
-    @FXML private Spinner<Double> sizeSpin;
-    @FXML private Spinner<Double> xSpin;
-    @FXML private Spinner<Double> ySpin;
+    @FXML private Spinner<Double> sizeSpin, xSpin, ySpin;
     @FXML private TextArea bodyText;
     private Text text;
     

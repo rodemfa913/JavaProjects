@@ -9,10 +9,7 @@ import javax.xml.bind.annotation.*;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 public class BColor {
-    @XmlAttribute private final double alpha;
-    @XmlAttribute private final double blue;
-    @XmlAttribute private final double green;
-    @XmlAttribute private final double red;
+    @XmlAttribute private final double alpha, blue, green, red;
     
     /**
      * Creates a default instance of BColor.

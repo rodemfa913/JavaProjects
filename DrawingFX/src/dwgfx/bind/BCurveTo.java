@@ -9,12 +9,7 @@ import javax.xml.bind.annotation.*;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 public class BCurveTo implements BElement {
-    @XmlAttribute private final double x;
-    @XmlAttribute private final double x1;
-    @XmlAttribute private final double x2;
-    @XmlAttribute private final double y;
-    @XmlAttribute private final double y1;
-    @XmlAttribute private final double y2;
+    @XmlAttribute private final double x, x1, x2, y, y1, y2;
     
     /**
      * Creates a default instance of BCurveTo.

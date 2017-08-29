@@ -10,10 +10,7 @@ import javax.xml.bind.annotation.XmlAttribute;
  * @author Rodemfa913
  */
 public class BArc extends BShape {
-    @XmlAttribute private final double length;
-    @XmlAttribute private final double rx;
-    @XmlAttribute private final double ry;
-    @XmlAttribute private final double start;
+    @XmlAttribute private final double length, rx, ry, start;
     
     /**
      * Creates a default instance of BArc.
@@ -27,7 +24,7 @@ public class BArc extends BShape {
     }
     
     /**
-     * Creates an insiance of BArc with properties of specified Arc.
+     * Creates an instance of BArc with properties of specified Arc.
      * @param arc an Arc.
      */
     public BArc(Arc arc) {
@@ -41,6 +38,6 @@ public class BArc extends BShape {
     @Override public TreeItem<Node> get() {
         Arc arc = new Arc(0, 0, rx, ry, start, length);
         load(arc);
-        return new TreeItem<>(arc);
+        return new TreeItem(arc);
     }
 }

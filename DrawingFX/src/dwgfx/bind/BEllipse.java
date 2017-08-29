@@ -10,8 +10,7 @@ import javax.xml.bind.annotation.XmlAttribute;
  * @author rodemfa
  */
 public class BEllipse extends BShape {
-    @XmlAttribute private final double rx;
-    @XmlAttribute private final double ry;
+    @XmlAttribute private final double rx, ry;
     
     /**
      * Creates a default instance of BEllipse.
@@ -35,6 +34,6 @@ public class BEllipse extends BShape {
     @Override public TreeItem<Node> get() {
         Ellipse ellipse = new Ellipse(rx, ry);
         load(ellipse);
-        return new TreeItem<>(ellipse);
+        return new TreeItem(ellipse);
     }
 }

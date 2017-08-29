@@ -13,16 +13,8 @@ import javafx.scene.shape.*;
  * @author Rodemfa913
  */
 public class ArcProps implements Properties {
-    @FXML private Label lengthLabel;
-    @FXML private Label rxLabel;
-    @FXML private Label ryLabel;
-    @FXML private Label startLabel;
-    @FXML private Spinner<Double> cxSpin;
-    @FXML private Spinner<Double> cySpin;
-    @FXML private Spinner<Double> lengthSpin;
-    @FXML private Spinner<Double> rxSpin;
-    @FXML private Spinner<Double> rySpin;
-    @FXML private Spinner<Double> startSpin;
+    @FXML private Label lengthLabel, rxLabel, ryLabel, startLabel;
+    @FXML private Spinner<Double> cxSpin, cySpin, lengthSpin, rxSpin, rySpin, startSpin;
     private Shape shape;
 
     /**

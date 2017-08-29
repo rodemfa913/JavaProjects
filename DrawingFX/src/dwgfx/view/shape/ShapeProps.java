@@ -21,12 +21,12 @@ import javafx.scene.transform.Affine;
  */
 public class ShapeProps implements Initializable, Properties {
     @FXML private Accordion shapeRoot;
-    @FXML private ColorPicker fillColorPicker;
-    @FXML private ColorPicker strokeColorPicker;
+    @FXML private ColorPicker fillColorPicker, strokeColorPicker;
     @FXML private ComboBox<StrokeLineCap> lineCapCombo;
     @FXML private ComboBox<StrokeLineJoin> lineJoinCombo;
     @FXML private Spinner<Double> strokeWidthSpin;
     @FXML private TextArea transText;
+    @FXML private TextField classText;
     @FXML private TitledPane genTitledPane;
     private Properties shapeController;
     private Shape shape;
@@ -58,6 +58,7 @@ public class ShapeProps implements Initializable, Properties {
      */
     @Override public void setItem(Node item) throws Exception {
         shape = (Shape) item;
+        classText.setText("");
         fillColorPicker.setValue((Color) shape.getFill());
         strokeColorPicker.setValue((Color) shape.getStroke());
         strokeWidthSpin.getValueFactory().setValue(shape.getStrokeWidth());

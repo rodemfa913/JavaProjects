@@ -10,10 +10,7 @@ import javax.xml.bind.annotation.XmlAttribute;
  * @author rodemfa
  */
 public class BRectangle extends BShape {
-    @XmlAttribute private final double arcHeight;
-    @XmlAttribute private final double arcWidth;
-    @XmlAttribute private final double height;
-    @XmlAttribute private final double width;
+    @XmlAttribute private final double arcHeight, arcWidth, height, width;
     
     /**
      * Creates a default instance of BRectangle.
@@ -42,6 +39,6 @@ public class BRectangle extends BShape {
         rect.setArcWidth(arcWidth);
         rect.setArcHeight(arcHeight);
         load(rect);
-        return new TreeItem<>(rect);
+        return new TreeItem(rect);
     }
 }

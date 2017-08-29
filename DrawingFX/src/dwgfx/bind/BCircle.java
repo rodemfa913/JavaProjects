@@ -32,6 +32,6 @@ public class BCircle extends BShape {
     @Override public TreeItem<Node> get() {
         Circle circle = new Circle(radius);
         load(circle);
-        return new TreeItem<>(circle);
+        return new TreeItem(circle);
     }
 }

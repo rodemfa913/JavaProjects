@@ -13,12 +13,7 @@ import javafx.scene.shape.Rectangle;
  * @author Rodemfa913
  */
 public class RectProps implements Properties {
-    @FXML private Spinner<Double> arcHeightSpin;
-    @FXML private Spinner<Double> arcWidthSpin;
-    @FXML private Spinner<Double> heightSpin;
-    @FXML private Spinner<Double> widthSpin;
-    @FXML private Spinner<Double> xSpin;
-    @FXML private Spinner<Double> ySpin;
+    @FXML private Spinner<Double> arcHeightSpin, arcWidthSpin, heightSpin, widthSpin, xSpin, ySpin;
     private Rectangle rect;
 
     /**

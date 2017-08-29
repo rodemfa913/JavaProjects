@@ -14,8 +14,7 @@ import javax.xml.bind.annotation.*;
  */
 @XmlRootElement(name = "drawing") @XmlAccessorType(XmlAccessType.FIELD)
 public class Drawing {
-    @XmlAttribute private final double height;
-    @XmlAttribute private final double width;
+    @XmlAttribute private final double height, width;
     @XmlAttribute private final String id;
     @XmlElement private final BColor background;
     @XmlElementWrapper @XmlElement(name = "layer")
@@ -28,7 +27,7 @@ public class Drawing {
         id = "drawing";
         width = height = 400.0;
         background = new BColor();
-        layers = new ArrayList<>();
+        layers = new ArrayList();
     }
     
     /**
@@ -40,7 +39,7 @@ public class Drawing {
         width = drawing.getMinWidth();
         height = drawing.getMinHeight();
         background = new BColor((Color) drawing.getBackground().getFills().get(0).getFill());
-        layers = new ArrayList<>();
+        layers = new ArrayList();
         drawing.getChildren().forEach((layer) -> {
             layers.add(new Layer((Group) layer));
         });

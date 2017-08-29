@@ -15,7 +15,7 @@ public abstract class PathUtil {
      * @throws Exception if the String could not be converted.
      */
     public static List<PathElement> parseElements (String data) throws Exception {
-        List<PathElement> elements = new ArrayList<>();
+        List<PathElement> elements = new ArrayList();
         String[] d = data.split("\\s+");
         int i = 0;
         while (i < d.length) {
