@@ -1,5 +1,6 @@
 package dwgfx.bind;
 
+import dwgfx.util.StyleClassUtil;
 import javafx.scene.Node;
 import javafx.scene.control.TreeItem;
 import javafx.scene.paint.Color;
@@ -16,6 +17,7 @@ import javax.xml.bind.annotation.*;
 public abstract class BShape {
     @XmlAttribute private final double x, y;
     @XmlAttribute private final String id;
+    @XmlAttribute(name = "class") private final String styleClass;
     @XmlElement private final BAffine transform;
     @XmlElement private final BColor fill;
     @XmlElement private final Stroke stroke;
@@ -25,6 +27,7 @@ public abstract class BShape {
      */
     public BShape() {
         id = "item";
+        styleClass = "";
         fill = new BColor();
         stroke = new Stroke();
         transform = new BAffine();
@@ -37,6 +40,7 @@ public abstract class BShape {
      */
     public BShape(Shape shape) {
         id = shape.getId();
+        styleClass = StyleClassUtil.toString(shape.getStyleClass());
         fill = new BColor((Color) shape.getFill());
         stroke = new Stroke(
                 (Color) shape.getStroke(), shape.getStrokeWidth(),
@@ -54,6 +58,7 @@ public abstract class BShape {
      */
     protected void load(Shape shape) {
         shape.setId(id);
+        shape.getStyleClass().setAll(StyleClassUtil.parseClasses(styleClass));
         shape.setFill(fill.get());
         shape.setStroke(stroke.getColor());
         shape.setStrokeWidth(stroke.getWidth());
