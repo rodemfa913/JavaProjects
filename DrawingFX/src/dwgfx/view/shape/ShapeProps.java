@@ -1,6 +1,6 @@
 package dwgfx.view.shape;
 
-import dwgfx.util.TransUtil;
+import dwgfx.util.*;
 import dwgfx.view.Properties;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -43,6 +43,7 @@ public class ShapeProps implements Initializable, Properties {
      */
     @Override public void handleApply() throws Exception {
         shapeController.handleApply();
+        shape.getStyleClass().setAll(StyleClassUtil.parseClasses(classText.getText()));
         shape.setFill(fillColorPicker.getValue());
         shape.setStroke(strokeColorPicker.getValue());
         shape.setStrokeWidth(strokeWidthSpin.getValue());
@@ -58,7 +59,7 @@ public class ShapeProps implements Initializable, Properties {
      */
     @Override public void setItem(Node item) throws Exception {
         shape = (Shape) item;
-        classText.setText("");
+        classText.setText(StyleClassUtil.toString(shape.getStyleClass()));
         fillColorPicker.setValue((Color) shape.getFill());
         strokeColorPicker.setValue((Color) shape.getStroke());
         strokeWidthSpin.getValueFactory().setValue(shape.getStrokeWidth());
