@@ -7,6 +7,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.*;
 import javafx.beans.value.*;
+import javafx.event.EventHandler;
 import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
@@ -29,11 +30,34 @@ public class PrimaryScene implements Initializable {
     @FXML private ScrollPane canvasScroll;
     @FXML private Slider zoomSlider;
     @FXML private TreeView<Node> nodeTree;
+    private ChangeListener<String> idListener;
+    private EventHandler<MouseEvent> shapeHandler;
     private FileChooser fileChooser;
     private InnerShadow effect;
     private Stage primaryStage;
     private Marshaller m;
     private Unmarshaller um;
+    
+    private class IdListener implements ChangeListener<String> {
+        @Override public void changed(
+                ObservableValue<? extends String> observable,
+                String oldValue,
+                String newValue) {
+            nodeTree.refresh();
+        }
+    }
+    
+    private class ShapeHandler implements EventHandler<MouseEvent> {
+        @Override public void handle(MouseEvent event) {
+            Shape shape = (Shape) event.getSource();
+            Group layer = (Group) shape.getParent();
+            int i = canvas.getChildren().indexOf(layer);
+            int j = layer.getChildren().indexOf(shape);
+            TreeItem<Node> layItem = nodeTree.getRoot().getChildren().get(i);
+            TreeItem<Node> shpItem = layItem.getChildren().get(j);
+            nodeTree.getSelectionModel().select(shpItem);
+        }
+    }
     
     private class TreeListener implements ChangeListener<TreeItem<Node>> {
         @Override public void changed(
@@ -54,7 +78,10 @@ public class PrimaryScene implements Initializable {
         effect = new InnerShadow();
         MultipleSelectionModel<TreeItem<Node>> selector = nodeTree.getSelectionModel();
         selector.selectedItemProperty().addListener(new TreeListener());
+        idListener = new IdListener();
+        canvas.idProperty().addListener(idListener);
         handleNew();
+        shapeHandler = new ShapeHandler();
         fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml"));
         try {
@@ -112,12 +139,14 @@ public class PrimaryScene implements Initializable {
                     shape = new Rectangle(200, 150);
             }
             shape.setId("shape");
+            shape.idProperty().addListener(idListener);
+            shape.setOnMouseClicked(shapeHandler);
             shape.setLayoutX(100.0);
             shape.setLayoutY(100.0);
             shape.getTransforms().add(new Affine());
             Group layer = (Group) layItem.getValue();
             layer.getChildren().add(shape);
-            layItem.getChildren().add(new TreeItem<>(shape));
+            layItem.getChildren().add(new TreeItem(shape));
         }
     }
     
@@ -140,8 +169,6 @@ public class PrimaryScene implements Initializable {
             Node node = item.getValue();
             controller.setItem(node);
             propsStage.showAndWait();
-            item.setValue(null);
-            item.setValue(node);
         } catch (Exception ex) {
             ExceptionDialog dialog = new ExceptionDialog(ex);
             dialog.showAndWait();
@@ -223,6 +250,7 @@ public class PrimaryScene implements Initializable {
     private TreeItem<Node> addLayer() {
         Group layer = new Group();
         layer.setId("layer");
+        layer.idProperty().addListener(idListener);
         canvas.getChildren().add(layer);
         TreeItem<Node> layItem = new TreeItem(layer);
         nodeTree.getRoot().getChildren().add(layItem);
