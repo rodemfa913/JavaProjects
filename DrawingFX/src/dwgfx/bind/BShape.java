@@ -70,8 +70,8 @@ public abstract class BShape {
     }
     
     /**
-     * Gets a TreeItem containing a new Shape with properties of BShape.
-     * @return a TreeItem containing a new Shape.
+     * Gets a new Shape with properties of BShape.
+     * @return a new Shape.
      */
-    public abstract TreeItem<Node> get();
+    public abstract Shape get();
 }

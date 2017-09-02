@@ -78,9 +78,9 @@ public class PrimaryScene implements Initializable {
         effect = new InnerShadow();
         MultipleSelectionModel<TreeItem<Node>> selector = nodeTree.getSelectionModel();
         selector.selectedItemProperty().addListener(new TreeListener());
+        handleNew();
         idListener = new IdListener();
         canvas.idProperty().addListener(idListener);
-        handleNew();
         shapeHandler = new ShapeHandler();
         fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml"));
@@ -201,7 +201,19 @@ public class PrimaryScene implements Initializable {
             try {
                 Drawing drawing = (Drawing) um.unmarshal(file);
                 handleNew();
-                drawing.load(nodeTree.getRoot());
+                drawing.load(canvas);
+                List<TreeItem<Node>> layItems = nodeTree.getRoot().getChildren();
+                canvas.getChildren().forEach((lay) -> {
+                    Group layer = (Group) lay;
+                    layer.idProperty().addListener(idListener);
+                    TreeItem<Node> layItem = new TreeItem(layer);
+                    layItems.add(layItem);
+                    layer.getChildren().forEach((shape) -> {
+                        shape.idProperty().addListener(idListener);
+                        shape.setOnMouseClicked(shapeHandler);
+                        layItem.getChildren().add(new TreeItem(shape));
+                    });
+                });
             } catch (Exception ex) {
                 ExceptionDialog dialog = new ExceptionDialog(ex);
                 dialog.showAndWait();

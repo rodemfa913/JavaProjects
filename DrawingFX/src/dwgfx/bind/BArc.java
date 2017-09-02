@@ -1,8 +1,6 @@
 package dwgfx.bind;
 
-import javafx.scene.Node;
-import javafx.scene.control.TreeItem;
-import javafx.scene.shape.Arc;
+import javafx.scene.shape.*;
 import javax.xml.bind.annotation.XmlAttribute;
 
 /**
@@ -35,9 +33,9 @@ public class BArc extends BShape {
         length = arc.getLength();
     }
     
-    @Override public TreeItem<Node> get() {
+    @Override public Shape get() {
         Arc arc = new Arc(0, 0, rx, ry, start, length);
         load(arc);
-        return new TreeItem(arc);
+        return arc;
     }
 }

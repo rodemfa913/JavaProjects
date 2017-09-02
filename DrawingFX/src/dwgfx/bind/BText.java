@@ -1,7 +1,6 @@
 package dwgfx.bind;
 
-import javafx.scene.Node;
-import javafx.scene.control.TreeItem;
+import javafx.scene.shape.Shape;
 import javafx.scene.text.*;
 import javax.xml.bind.annotation.*;
 
@@ -38,12 +37,12 @@ public class BText extends BShape {
         body = text.getText().replace("\\", "\\\\").replace("\n", "\\n");
     }
     
-    @Override public TreeItem<Node> get() {
+    @Override public Shape get() {
         Text text = new Text(body.replace("\\n", "\n").replace("\\\\", "\\"));
         FontWeight weight = fontStyle.contains("Bold") ? FontWeight.BOLD : FontWeight.NORMAL;
         FontPosture posture = fontStyle.contains("Italic") ? FontPosture.ITALIC : FontPosture.REGULAR;
         text.setFont(Font.font(fontFamily, weight, posture, fontSize));
         load(text);
-        return new TreeItem(text);
+        return text;
     }
 }

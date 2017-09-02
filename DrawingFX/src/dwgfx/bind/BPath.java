@@ -1,8 +1,6 @@
 package dwgfx.bind;
 
 import java.util.*;
-import javafx.scene.Node;
-import javafx.scene.control.TreeItem;
 import javafx.scene.shape.*;
 import javax.xml.bind.annotation.*;
 
@@ -50,13 +48,13 @@ public class BPath extends BShape {
         });
     }
     
-    @Override public TreeItem<Node> get() {
+    @Override public Shape get() {
         Path path = new Path();
         List<PathElement> elems = path.getElements();
         elements.forEach((element) -> {
             elems.add(element.get());
         });
         load(path);
-        return new TreeItem(path);
+        return path;
     }
 }

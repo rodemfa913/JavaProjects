@@ -2,7 +2,6 @@ package dwgfx.bind;
 
 import java.util.*;
 import javafx.scene.*;
-import javafx.scene.control.TreeItem;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javax.xml.bind.annotation.*;
@@ -49,12 +48,10 @@ public class Drawing {
     }
     
     /**
-     * Sets the properties of Drawing into the drawing surface which is
-     * the value of specified TreeItem.
-     * @param root a TreeItem whose value is the drawing surface.
+     * Sets the properties of Drawing into specified drawing surface.
+     * @param drawing the drawing surface.
      */
-    public void load(TreeItem<Node> root) {
-        AnchorPane drawing = (AnchorPane) root.getValue();
+    public void load(AnchorPane drawing) {
         drawing.setId(id);
         drawing.setMinWidth(width);
         drawing.setMinHeight(height);
@@ -64,12 +61,9 @@ public class Drawing {
         if (!stylesheet.isEmpty()) {
             stylesheets.add(stylesheet);
         }
-        List<TreeItem<Node>> layItems = root.getChildren();
-        List<Node> layNodes = drawing.getChildren();
+        List<Node> children = drawing.getChildren();
         layers.forEach((layer) -> {
-            TreeItem<Node> layItem = layer.get();
-            layItems.add(layItem);
-            layNodes.add(layItem.getValue());
+            children.add(layer.get());
         });
     }
 }
