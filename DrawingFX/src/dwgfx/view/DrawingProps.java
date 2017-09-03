@@ -1,7 +1,7 @@
 package dwgfx.view;
 
 import java.io.File;
-import java.net.URL;
+import java.net.*;
 import java.util.*;
 import javafx.fxml.*;
 import javafx.scene.Node;
@@ -30,31 +30,31 @@ public class DrawingProps implements Initializable, Properties {
     
     /**
      * Applies the changes on item.
-     * @throws Exception if the Stylesheet property is incorrect (?).
      */
-    @Override public void handleApply() throws Exception {
+    @Override public void handleApply() {
         drawing.setMinWidth(widthSpin.getValue());
         drawing.setMinHeight(heightSpin.getValue());
         drawing.setBackground(new Background(new BackgroundFill(bgColorPicker.getValue(), null, null)));
         List<String> stylesheets = drawing.getStylesheets();
         stylesheets.clear();
         if (styleFile != null) {
-            stylesheets.add(styleFile.toURI().toURL().toString());
+            stylesheets.add(styleFile.toURI().toString());
         }
     }
     
     /**
      * Sets the item for edition.
      * @param item the item to be edited.
+     * @throws Exception if the Stylesheet property is incorrect (?).
      */
-    @Override public void setItem(Node item) {
+    @Override public void setItem(Node item) throws Exception {
         drawing = (AnchorPane) item;
         widthSpin.getValueFactory().setValue(drawing.getMinWidth());
         heightSpin.getValueFactory().setValue(drawing.getMinHeight());
         bgColorPicker.setValue((Color) drawing.getBackground().getFills().get(0).getFill());
         List<String> stylesheets = drawing.getStylesheets();
         if (!stylesheets.isEmpty()) {
-            setStyleFile(new File(stylesheets.get(0)));
+            setStyleFile(new File(new URI(stylesheets.get(0))));
         }
     }
     
