@@ -80,6 +80,8 @@
                 <Separator orientation="VERTICAL" />
                 <Label text="Zoom Factor:" />
                 <Slider fx:id="zoomSlider" blockIncrement="1.0" majorTickUnit="6.0" max="6.0" min="-6.0" minorTickCount="2" onKeyReleased="#handleZoomKey" onMouseReleased="#handleZoomMouse" showTickMarks="true" />
+                <Separator orientation="VERTICAL" />
+                <Label fx:id="coordsLabel" minWidth="130.0" text="Cursor: 0, 0" />
             </children>
             <BorderPane.margin>
                 <Insets bottom="3.0" />
@@ -98,7 +100,7 @@
             <content>
                 <Group>
                     <children>
-                        <AnchorPane fx:id="canvas" />
+                        <AnchorPane fx:id="canvas" onMouseMoved="#handleCoords" />
                     </children>
                 </Group>
             </content>

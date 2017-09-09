@@ -27,6 +27,7 @@ import javax.xml.bind.*;
 public class PrimaryScene implements Initializable {
     @FXML private AnchorPane canvas;
     @FXML private ComboBox<String> typeCombo;
+    @FXML private Label coordsLabel;
     @FXML private ScrollPane canvasScroll;
     @FXML private Slider zoomSlider;
     @FXML private TreeView<Node> nodeTree;
@@ -148,6 +149,10 @@ public class PrimaryScene implements Initializable {
             layer.getChildren().add(shape);
             layItem.getChildren().add(new TreeItem(shape));
         }
+    }
+    
+    @FXML private void handleCoords(MouseEvent event) {
+        coordsLabel.setText("Cursor: " + (int) event.getX() + ", " + (int) event.getY());
     }
     
     @FXML private void handleDelete() {
